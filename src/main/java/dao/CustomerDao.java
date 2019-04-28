@@ -2,6 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
 
 import model.Customer;
 import model.Location;
@@ -10,7 +11,6 @@ public class CustomerDao {
 	/*
 	 * This class handles all the database operations related to the customer table
 	 */
-
     public Customer getDummyCustomer() {
         Location location = new Location();
         location.setZipCode(11790);
@@ -43,7 +43,6 @@ public class CustomerDao {
     }
 
     /**
-	 * @param String searchKeyword
 	 * @return ArrayList<Customer> object
 	 */
 	public List<Customer> getCustomers(String searchKeyword) {
@@ -79,7 +78,18 @@ public class CustomerDao {
 		 * The students code to fetch data from the database will be written here
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
-		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con=DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
+			Statement stmt=con.createStatement();
+			ResultSet rs=stmt.executeQuery("select * from snisonoff.Client where id=" + customerID.replace("-", ""));
+			while(rs.next())
+				System.out.println(rs.getString(1)+"  "+rs.getInt(2)+"  "+rs.getString(3) + "  " + rs.getString(4));
+			con.close();
+		}
+		catch(Exception c){
+			System.out.println(c);
+		}
 		return getDummyCustomer();
 	}
 	
