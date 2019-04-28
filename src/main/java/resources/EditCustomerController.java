@@ -36,7 +36,7 @@ public class EditCustomerController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String customerID = request.getParameter("customerID");
+		String customerID = request.getParameter("customerId");
 		
 		CustomerDao customerDao = new CustomerDao();
 		Customer editCustomer = customerDao.getCustomer(customerID);

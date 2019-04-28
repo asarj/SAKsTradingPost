@@ -209,7 +209,7 @@ public class CustomerDao {
         String email = customer.getEmail();
         int rating = customer.getRating();
         String creditCard = customer.getCreditCard();
-        int clientId = Integer.parseInt(customer.getClientId());
+        int clientId = Integer.parseInt(customer.getClientId().replace("-", ""));
         int SSN = Integer.parseInt(customer.getSsn().replace("-", ""));
         String lastName = customer.getLastName();
         String firstName = customer.getFirstName();
@@ -266,7 +266,7 @@ public class CustomerDao {
         String email = customer.getEmail();
         int rating = customer.getRating();
         String creditCard = customer.getCreditCard();
-        int clientId = Integer.parseInt(customer.getClientId());
+        int clientId = Integer.parseInt(customer.getClientId().replace("-", ""));
         int SSN = Integer.parseInt(customer.getSsn().replace("-", ""));
         String lastName = customer.getLastName();
         String firstName = customer.getFirstName();
@@ -277,18 +277,29 @@ public class CustomerDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery("update snisonoff.Location " +
-////                            "                       set City = " + city + ", State= " + state + " " +
-////                            "                       where Zipcode =" + zip + ")"
-////            );
-            ResultSet rt = stmt.executeQuery("update snisonoff.Person " +
-                                                    "set LastName=" + lastName + ", firstName = " + firstName + ", Address = " + address + ", Zipcode = " + zip + ", Telephone = " + tel +
-                                                    "where SSN = " + SSN + ")"
-            );
-            ResultSet ru = stmt.executeQuery("update snisonoff.Person " +
-                                                    "set Email = " + email + ", Rating = " + rating + ", CreditCardNumber = " + creditCard +
-                                                    "where Id = " + clientId + ")"
-            );
+            String sql = "update snisonoff.Location set City = ?, State = ? where Zipcode = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, city);
+            pst.setString(2, state);
+            pst.setInt(3, zip);
+            pst.executeUpdate();
+
+            sql = "update snisonoff.Person set LastName= ?, firstName = ?, Address = ?, Zipcode = ?, Telephone = ? where SSN = ?";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, lastName);
+            pst.setString(2, firstName);
+            pst.setString(3, address);
+            pst.setInt(4, zip);
+            pst.setString(5, tel);
+            pst.setInt(6, SSN);
+            pst.executeUpdate();
+
+            sql = "update snisonoff.Person set Email = ?, Rating = ?, CreditCardNumber = ? where Id = ?";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, email);
+            pst.setInt(2, rating);
+            pst.setString(3, creditCard);
+            pst.setInt(4, SSN);
             con.close();
             return "success";
         }
