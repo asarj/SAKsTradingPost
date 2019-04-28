@@ -146,15 +146,17 @@ public class CustomerDao {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("delete from snisonoff.Client where Id=" + customerID.replace("-", ""));
+                stmt.execute("delete from snisonoff.Client where Id=" + customerID.replace("-", ""));
+                stmt.execute("delete from snisonoff.Person where Id=" + customerID.replace("-", ""));
                 con.close();
                 return "success";
             }
             catch(Exception e){
                 System.out.println(e);
+                return "failure";
             }
         }
-        return "failure";
+
 		/*Sample data ends*/
 		
 	}
@@ -220,31 +222,70 @@ public class CustomerDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("insert into snisonoff.Location values (" + zip + ", "
-                                                                                            + city + ", "
-                                                                                            + state + ")"
-                                                                                        );
-            ResultSet rt = stmt.executeQuery("insert into snisonoff.Person values (" + SSN + ", "
-                                                                                        + lastName + ", "
-                                                                                        + firstName + ", "
-                                                                                        + address + ", "
-                                                                                        + zip + ", "
-                                                                                        + tel + ")"
-                                                                                        );
-            ResultSet ru = stmt.executeQuery("insert into snisonoff.Client values (" + email + ", "
-                                                                                            + rating + ", "
-                                                                                            + creditCard + ", "
-                                                                                            + clientId + ")"
-                                                                                        );
+            String sql = "insert into snisonoff.Location values (?, ?, ?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, zip);
+            pst.setString(2, city);
+            pst.setString(3, state);
+            pst.executeUpdate();
+
+            sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, SSN);
+            pst.setString(2, lastName);
+            pst.setString(3, firstName);
+            pst.setString(4, address);
+            pst.setInt(5, zip);
+            pst.setString(6, tel);
+            pst.executeUpdate();
+
+            sql = "insert into snisonoff.Client values (?, ?, ?, ?)";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, email);
+            pst.setInt(2, rating);
+            pst.setString(3, creditCard);
+            pst.setInt(4, clientId);
+            pst.executeUpdate();
+
             con.close();
             return "success";
+        }
+        catch(SQLIntegrityConstraintViolationException j){
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+                Statement stmt = con.createStatement();
+                String sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setInt(1, SSN);
+                pst.setString(2, lastName);
+                pst.setString(3, firstName);
+                pst.setString(4, address);
+                pst.setInt(5, zip);
+                pst.setString(6, tel);
+                pst.executeUpdate();
+
+                sql = "insert into snisonoff.Client values (?, ?, ?, ?)";
+                pst = con.prepareStatement(sql);
+                pst.setString(1, email);
+                pst.setInt(2, rating);
+                pst.setString(3, creditCard);
+                pst.setInt(4, clientId);
+                pst.executeUpdate();
+
+                con.close();
+                return "success";
+            }
+            catch(Exception s){
+                System.out.println(s);
+                return "failure";
+            }
         }
         catch(Exception e){
             System.out.println(e);
             return "failure";
         }
 		/*Sample data ends*/
-
 	}
 
 	public String editCustomer(Customer customer) {

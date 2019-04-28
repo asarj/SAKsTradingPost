@@ -69,6 +69,7 @@ public class AddCustomerController extends HttpServlet {
 		customer.setTelephone(telephone);
 		customer.setId(ssn);
 		customer.setSsn(ssn);
+		customer.setClientId(ssn);
 		customer.setCreditCard(creditCard);
 		customer.setRating(rating);
 		
