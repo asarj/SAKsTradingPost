@@ -54,4 +54,17 @@ public class Customer extends Person{
     public void setAccountCreationTime(String accountCreationTime) {
         this.accountCreationTime = accountCreationTime;
     }
+
+    public String printCustomerDetails(){
+       return
+                "Name: " + getFirstName() + " " + getLastName() + "\n" +
+                "Id: " + getId() + "\n" +
+                "ClientId: " + getClientId() + "\n" +
+                "Address: " + getAddress() + "\n" +
+                "City: " + getLocation().getCity() + "\n" +
+                "State: " + getLocation().getState() + "\n" +
+                "Zip: " + getLocation().getZipCode() + "\n" +
+                "Telephone: " + getTelephone() + "\n"
+        ;
+    }
 }

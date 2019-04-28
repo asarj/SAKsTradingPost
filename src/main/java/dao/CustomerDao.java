@@ -78,19 +78,54 @@ public class CustomerDao {
 		 * The students code to fetch data from the database will be written here
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
+        Customer c = null;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con=DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
 			Statement stmt=con.createStatement();
 			ResultSet rs=stmt.executeQuery("select * from snisonoff.Client where id=" + customerID.replace("-", ""));
-			while(rs.next())
-				System.out.println(rs.getString(1)+"  "+rs.getInt(2)+"  "+rs.getString(3) + "  " + rs.getString(4));
-			con.close();
+			while (rs.next()) {
+                System.out.println(rs.getString(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4));
+                // Column 1 = email, column 2 = rating, column 3 = credit card num, column 4 = id
+                c = new Customer();
+                c.setEmail(rs.getString(1));
+                c.setRating(Integer.parseInt(rs.getString(2)));
+                c.setCreditCard(rs.getString(3));
+                c.setClientId(rs.getString(4));
+            }
+            ResultSet rt = stmt.executeQuery("select * from snisonoff.Person where SSN=" + customerID.replace("-", ""));
+			String zip = "";
+            while (rt.next()) {
+                c.setId(rt.getString(1));
+                c.setSsn(rt.getString(1));
+                c.setLastName(rt.getString(2));
+                c.setFirstName(rt.getString(3));
+                c.setAddress(rt.getString(4));
+                zip = rt.getString(5);
+                c.setTelephone(rt.getString(6));
+            }
+//            rt.close();
+            ResultSet ru = stmt.executeQuery("select * from snisonoff.Location where Zipcode=" + zip);
+            while (ru.next()) {
+                Location l = new Location();
+                l.setZipCode(ru.getInt(1));
+                l.setCity(ru.getString(2));
+                l.setState(ru.getString(3));
+                c.setLocation(l);
+            }
+//            ru.close();
+//			rs.close();
+            System.out.println(c.printCustomerDetails());
+            con.close();
 		}
-		catch(Exception c){
-			System.out.println(c);
+		catch(Exception x){
+			System.out.println(x);
+            System.out.println("Customer not found");
 		}
-		return getDummyCustomer();
+		if(c == null){
+		    return null;
+        }
+		return c;
 	}
 	
 	public String deleteCustomer(String customerID) {
@@ -102,6 +137,31 @@ public class CustomerDao {
 		 */
 
 		/*Sample data begins*/
+        Customer c = getCustomer(customerID);
+        if (c == null){
+            return "failure";
+        }
+        else{
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("delete from snisonoff.Client where id=" + customerID.replace("-", ""));
+                while (rs.next()) {
+                    System.out.println(rs.getString(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4));
+                    // Column 1 = email, column 2 = rating, column 3 = credit card num, column 4 = id
+                    c = new Customer();
+                    c.setEmail(rs.getString(1));
+                    c.setRating(Integer.parseInt(rs.getString(2)));
+                    c.setCreditCard(rs.getString(3));
+                    c.setClientId(rs.getString(4));
+                }
+                con.close();
+            }
+            catch(Exception e){
+                System.out.println(e);
+            }
+        }
 		return "success";
 		/*Sample data ends*/
 		
