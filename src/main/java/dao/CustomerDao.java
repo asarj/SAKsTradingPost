@@ -81,9 +81,9 @@ public class CustomerDao {
         Customer c = null;
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
-			Statement stmt=con.createStatement();
-			ResultSet rs=stmt.executeQuery("select * from snisonoff.Client where id=" + customerID.replace("-", ""));
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from snisonoff.Client where id=" + customerID.replace("-", ""));
 			while (rs.next()) {
                 System.out.println(rs.getString(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4));
                 // Column 1 = email, column 2 = rating, column 3 = credit card num, column 4 = id
@@ -167,8 +167,25 @@ public class CustomerDao {
 		 * username, which is the email address of the customer, who's ID has to be returned, is given as method parameter
 		 * The Customer's ID is required to be returned as a String
 		 */
-
-		return "111-11-1111";
+		String id = "";
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select Id from snisonoff.Client where Email=" + email);
+            while(rs.next()){
+                id = rs.getString(1);
+            }
+            con.close();
+            return "success";
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+        if(id.equals("")){
+            return "NOT FOUND";
+        }
+		return id;
 	}
 
 
@@ -183,7 +200,49 @@ public class CustomerDao {
 		 */
 		
 		/*Sample data begins*/
-		return "success";
+        if(customer == null){
+            return "failure";
+        }
+        int zip = customer.getLocation().getZipCode();
+        String city = customer.getLocation().getCity();
+        String state = customer.getLocation().getState();
+        String email = customer.getEmail();
+        int rating = customer.getRating();
+        String creditCard = customer.getCreditCard();
+        int clientId = Integer.parseInt(customer.getClientId());
+        int SSN = Integer.parseInt(customer.getSsn().replace("-", ""));
+        String lastName = customer.getLastName();
+        String firstName = customer.getFirstName();
+        String address = customer.getAddress();
+        String tel = customer.getTelephone();
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("insert into snisonoff.Location values (" + zip + ", "
+                                                                                            + city + ", "
+                                                                                            + state + ")"
+                                                                                        );
+            ResultSet rt = stmt.executeQuery("insert into snisonoff.Person values (" + SSN + ", "
+                                                                                        + lastName + ", "
+                                                                                        + firstName + ", "
+                                                                                        + address + ", "
+                                                                                        + zip + ", "
+                                                                                        + tel + ")"
+                                                                                        );
+            ResultSet ru = stmt.executeQuery("insert into snisonoff.Client values (" + email + ", "
+                                                                                            + rating + ", "
+                                                                                            + creditCard + ", "
+                                                                                            + clientId + ")"
+                                                                                        );
+            con.close();
+            return "success";
+        }
+        catch(Exception e){
+            System.out.println(e);
+            return "failure";
+        }
 		/*Sample data ends*/
 
 	}
@@ -198,7 +257,45 @@ public class CustomerDao {
 		 */
 		
 		/*Sample data begins*/
-		return "success";
+        if(customer == null){
+            return "failure";
+        }
+        int zip = customer.getLocation().getZipCode();
+        String city = customer.getLocation().getCity();
+        String state = customer.getLocation().getState();
+        String email = customer.getEmail();
+        int rating = customer.getRating();
+        String creditCard = customer.getCreditCard();
+        int clientId = Integer.parseInt(customer.getClientId());
+        int SSN = Integer.parseInt(customer.getSsn().replace("-", ""));
+        String lastName = customer.getLastName();
+        String firstName = customer.getFirstName();
+        String address = customer.getAddress();
+        String tel = customer.getTelephone();
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+            Statement stmt = con.createStatement();
+//            ResultSet rs = stmt.executeQuery("update snisonoff.Location " +
+////                            "                       set City = " + city + ", State= " + state + " " +
+////                            "                       where Zipcode =" + zip + ")"
+////            );
+            ResultSet rt = stmt.executeQuery("update snisonoff.Person " +
+                                                    "set LastName=" + lastName + ", firstName = " + firstName + ", Address = " + address + ", Zipcode = " + zip + ", Telephone = " + tel +
+                                                    "where SSN = " + SSN + ")"
+            );
+            ResultSet ru = stmt.executeQuery("update snisonoff.Person " +
+                                                    "set Email = " + email + ", Rating = " + rating + ", CreditCardNumber = " + creditCard +
+                                                    "where Id = " + clientId + ")"
+            );
+            con.close();
+            return "success";
+        }
+        catch(Exception e){
+            System.out.println(e);
+            return "failure";
+        }
 		/*Sample data ends*/
 
 	}
