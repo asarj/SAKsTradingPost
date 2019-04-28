@@ -306,14 +306,46 @@ public class CustomerDao {
 		 * This method fetches the all customer mailing details and returns it
 		 * The students code to fetch data from the database will be written here
 		 */
+        List<Customer> customers = new ArrayList<Customer>();
+        /* THIS IS WHERE QUERY CODE STARTS*/
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select P.SSN, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, C.Email " +
+                                                    "from snisonoff.Client c, snisonoff.Location l, snisonoff.Person p " +
+                                                    "where c.Id = p.SSN and p.Zipcode = l.Zipcode");
+            while(rs.next()){
+                Customer c = new Customer();
+                c.setSsn(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                c.setClientId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                c.setId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                c.setLastName(rs.getString(2));
+                c.setFirstName(rs.getString(3));
+                c.setAddress(rs.getString(4));
+                Location l = new Location();
+                l.setZipCode(rs.getInt(5));
+                l.setCity(rs.getString(6));
+                l.setState(rs.getString(7));
+                c.setLocation(l);
+                c.setEmail(rs.getString(8));
+                customers.add(c);
+            }
+            con.close();
+        }
+        catch(Exception x){
+            System.out.println(x);
+            System.out.println("Error loading the rest of the customer mailing list");
+        }
 
-        return getDummyCustomerList();
+        return customers;
     }
 
     public List<Customer> getAllCustomers() {
         /*
 		 * This method fetches returns all customers
 		 */
+        List<Customer> customers = new ArrayList<Customer>();
         return getDummyCustomerList();
     }
 }
