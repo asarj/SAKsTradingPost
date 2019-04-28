@@ -6,10 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="Figured how to connect to db through java code, example can be found in customerdao">
+    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="getCustomer() method is functional">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Customer.java" afterDir="false" />
     </list>
     <ignored path="Jsp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,8 +68,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="147" column="55" lean-forward="true" selection-start-line="147" selection-start-column="55" selection-end-line="147" selection-end-column="55" />
+            <state relative-caret-position="-460">
+              <caret line="130" column="23" lean-forward="true" selection-start-line="130" selection-start-column="18" selection-end-line="130" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -254,7 +253,7 @@
     <property name="SearchEverywhereHistoryKey" value="web.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;suggest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetStockSuggestionsController.java&#10;getstocks&#9;PSI&#9;JAVA://resources.GetStocksController&#10;GetOrdersByCu&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetOrdersByCustomerController.java&#10;xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;SetSt&#9;PSI&#9;JAVA://resources.SetStockPriceController&#10;getStocksByCustome&#9;PSI&#9;JAVA://resources.GetStocksByCustomerController&#10;web&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;etBest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetBestsellersController.java&#10;manager.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/managerHome.jsp&#10;viewsear&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/ViewSearchStocksController.java&#10;home.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;sug&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/PersonalizedSuggestionsController.java&#10;best&#9;PSI&#9;JAVA://resources.GetBestsellersForCustomerController&#10;home.&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;viewStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/viewSetStockPrice.jsp&#10;loginDao&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/dao/LoginDao.java&#10;login&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/model/Login.java&#10;GetHighestRevenueEmploye&#9;PSI&#9;JAVA://dao.EmployeeDao#getHighestRevenueEmployee&#10;showHigh&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showHighestRevenueEmployee.jsp&#10;viewSetStockPrice&#9;ACTION&#9;null&#10;setStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/setStockPrice.jsp&#10;customerrepre&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/customerRepresentativeHome.jsp&#10;home&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;inde&#9;RUN_CONFIGURATION&#9;index.jsp&#10;index&#9;RUN_CONFIGURATION&#9;index.jsp&#10;showcus&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showCustomerMailingList.jsp" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556458791485" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556465823311" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -1026,7 +1025,7 @@
       <workItem from="1554162563110" duration="1461000" />
       <workItem from="1554740213348" duration="2032000" />
       <workItem from="1554742314847" duration="1718000" />
-      <workItem from="1555173564841" duration="9951000" />
+      <workItem from="1555173564841" duration="11265000" />
     </task>
     <task id="LOCAL-00001" summary="Figured how to connect to db through java code, example can be found in customerdao">
       <created>1556420336080</created>
@@ -1035,11 +1034,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556420336080</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="getCustomer() method is functional">
+      <created>1556458877222</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1556458877222</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111449000" />
+    <option name="totallyTimeSpent" value="112763000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1064,8 +1070,8 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32870865" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49511003" weight="0.33191034" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.5325507" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49511003" visible="true" weight="0.33191034" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3906083" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32892805" />
@@ -1141,7 +1147,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added base code" />
     <MESSAGE value="Figured how to connect to db through java code, example can be found in customerdao" />
-    <option name="LAST_COMMIT_MESSAGE" value="Figured how to connect to db through java code, example can be found in customerdao" />
+    <MESSAGE value="getCustomer() method is functional" />
+    <option name="LAST_COMMIT_MESSAGE" value="getCustomer() method is functional" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1260,14 +1267,6 @@
           <properties />
           <option name="timeStamp" value="42" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java</url>
-          <line>72</line>
-          <properties class="dao.CustomerDao" method="getCustomer">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="44" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -1279,13 +1278,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/showOrders.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-165" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/resources/DeleteCustomerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-184">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/resources/DeleteEmployeeController.java">
@@ -1396,13 +1388,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="58" column="54" selection-start-line="58" selection-start-column="54" selection-end-line="58" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2026">
-          <caret line="298" column="66" selection-start-line="298" selection-start-column="66" selection-end-line="298" selection-end-column="66" />
         </state>
       </provider>
     </entry>
@@ -1584,10 +1569,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="903">
+          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/resources/DeleteCustomerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="147" column="55" lean-forward="true" selection-start-line="147" selection-start-column="55" selection-end-line="147" selection-end-column="55" />
+        <state relative-caret-position="-460">
+          <caret line="130" column="23" lean-forward="true" selection-start-line="130" selection-start-column="18" selection-end-line="130" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -146,23 +146,15 @@ public class CustomerDao {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("delete from snisonoff.Client where id=" + customerID.replace("-", ""));
-                while (rs.next()) {
-                    System.out.println(rs.getString(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4));
-                    // Column 1 = email, column 2 = rating, column 3 = credit card num, column 4 = id
-                    c = new Customer();
-                    c.setEmail(rs.getString(1));
-                    c.setRating(Integer.parseInt(rs.getString(2)));
-                    c.setCreditCard(rs.getString(3));
-                    c.setClientId(rs.getString(4));
-                }
+                ResultSet rs = stmt.executeQuery("delete from snisonoff.Client where Id=" + customerID.replace("-", ""));
                 con.close();
+                return "success";
             }
             catch(Exception e){
                 System.out.println(e);
             }
         }
-		return "success";
+        return "failure";
 		/*Sample data ends*/
 		
 	}
