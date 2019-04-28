@@ -42,7 +42,7 @@ public class GetCustomersController extends HttpServlet {
 		String searchKeyword = request.getParameter("searchKeyword");
 		
 		CustomerDao dao = new CustomerDao();
-		List<Customer> customers = dao.getCustomers(searchKeyword);
+		List<Customer> customers = dao.getAllCustomers();
 		
 		request.setAttribute("customers", customers);
 		request.setAttribute("heading", "Show customers");
