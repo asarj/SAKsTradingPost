@@ -1,6 +1,12 @@
 package dao;
 
+import model.Customer;
 import model.Login;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class LoginDao {
 	/*
@@ -20,7 +26,66 @@ public class LoginDao {
 		
 		/*Sample data begins*/
 		Login login = new Login();
-
+		CustomerDao cd = new CustomerDao();
+		String succ = cd.getCustomerID(username);
+		String dbPassword = null;
+		if(succ != null){
+			login.setUsername(username);
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery("select Password from snisonoff.Login where Email=" + username);
+				while(rs.next()){
+					dbPassword = rs.getString(1);
+				}
+				con.close();
+				if(dbPassword == null || !password.equals(dbPassword)){
+					login.setPassword(null);
+				}
+				else{
+					login.setPassword(dbPassword);
+					login.setRole(role);
+					return login;
+				}
+			}
+			catch(Exception e){
+				System.out.println(e);
+				return login;
+			}
+		}
+		else{
+			EmployeeDao ed = new EmployeeDao();
+			succ = ed.getEmployeeID(username);
+			if(succ != null){
+				login.setUsername(username);
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery("select Password from snisonoff.Login where Email=" + username);
+					while(rs.next()){
+						dbPassword = rs.getString(1);
+					}
+					con.close();
+					if(dbPassword == null || !password.equals(dbPassword)){
+						login.setPassword(null);
+					}
+					else{
+						login.setPassword(dbPassword);
+						login.setRole(role);
+						return login;
+					}
+				}
+				catch(Exception e){
+					System.out.println(e);
+					return login;
+				}
+			}
+			else{
+				return null;
+			}
+		}
 		login.setRole(role);
 		return login;
 		/*Sample data ends*/

@@ -265,7 +265,10 @@ public class CustomerDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select Id from snisonoff.Client where Email=" + email);
+            String sql = "select SSN from snisonoff.Client where Email=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, email);
+            ResultSet rs = pst.executeQuery();
             while(rs.next()){
                 id = rs.getString(1);
             }
