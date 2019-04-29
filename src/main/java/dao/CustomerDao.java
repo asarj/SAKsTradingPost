@@ -320,7 +320,7 @@ public class CustomerDao {
             pst.setString(3, state);
             pst.executeUpdate();
 
-            sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+            sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?, ?)";
             pst = con.prepareStatement(sql);
             pst.setInt(1, SSN);
             pst.setString(2, lastName);
@@ -328,6 +328,7 @@ public class CustomerDao {
             pst.setString(4, address);
             pst.setInt(5, zip);
             pst.setString(6, tel);
+            pst.setString(7, email);
             pst.executeUpdate();
 
             sql = "insert into snisonoff.Client values (?, ?, ?, ?)";
@@ -346,7 +347,7 @@ public class CustomerDao {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
                 Statement stmt = con.createStatement();
-                String sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+                String sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setInt(1, SSN);
                 pst.setString(2, lastName);
@@ -354,6 +355,7 @@ public class CustomerDao {
                 pst.setString(4, address);
                 pst.setInt(5, zip);
                 pst.setString(6, tel);
+                pst.setString(7, email);
                 pst.executeUpdate();
 
                 sql = "insert into snisonoff.Client values (?, ?, ?, ?)";
@@ -416,17 +418,18 @@ public class CustomerDao {
             pst.setInt(3, zip);
             pst.executeUpdate();
 
-            sql = "update snisonoff.Person set LastName= ?, firstName = ?, Address = ?, Zipcode = ?, Telephone = ? where SSN = ?";
+            sql = "update snisonoff.Person set LastName= ?, firstName = ?, Address = ?, Zipcode = ?, Telephone = ?, Email = ? where SSN = ?";
             pst = con.prepareStatement(sql);
             pst.setString(1, lastName);
             pst.setString(2, firstName);
             pst.setString(3, address);
             pst.setInt(4, zip);
             pst.setString(5, tel);
-            pst.setInt(6, SSN);
+            pst.setString(6, email);
+            pst.setInt(7, SSN);
             pst.executeUpdate();
 
-            sql = "update snisonoff.Person set Email = ?, Rating = ?, CreditCardNumber = ? where Id = ?";
+            sql = "update snisonoff.Client set Email = ?, Rating = ?, CreditCardNumber = ? where Id = ?";
             pst = con.prepareStatement(sql);
             pst.setString(1, email);
             pst.setInt(2, rating);

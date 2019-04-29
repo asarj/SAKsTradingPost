@@ -289,28 +289,37 @@ public class EmployeeDao {
 		 */
 
 		List<Employee> employees = new ArrayList<Employee>();
-
-		Location location = new Location();
-		location.setCity("Stony Brook");
-		location.setState("NY");
-		location.setZipCode(11790);
-
-		/*Sample data begins*/
-		for (int i = 0; i < 10; i++) {
-			Employee employee = new Employee();
-			employee.setId("111-11-1111");
-			employee.setEmail("shiyong@cs.sunysb.edu");
-			employee.setFirstName("Shiyong");
-			employee.setLastName("Lu");
-			employee.setAddress("123 Success Street");
-			employee.setLocation(location);
-			employee.setTelephone("5166328959");
-			employee.setEmployeeID("631-413-5555");
-			employee.setHourlyRate(100);
-			employees.add(employee);
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select P.Id, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, C.Email, C.CreditCardNumber, C.Rating " +
+					"from snisonoff.Client C, snisonoff.Location L, snisonoff.Person P " +
+					"where c.Id = P.SSN and P.Zipcode = L.Zipcode");
+			while(rs.next()){
+				Customer c = new Customer();
+				c.setSsn(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				c.setClientId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				c.setId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				c.setLastName(rs.getString(2));
+				c.setFirstName(rs.getString(3));
+				c.setAddress(rs.getString(4));
+				Location l = new Location();
+				l.setZipCode(rs.getInt(5));
+				l.setCity(rs.getString(6));
+				l.setState(rs.getString(7));
+				c.setLocation(l);
+				c.setEmail(rs.getString(8));
+				c.setCreditCard(rs.getString(9));
+				c.setRating(rs.getInt(10));
+				customers.add(c);
+			}
+			con.close();
 		}
-		/*Sample data ends*/
-		
+		catch(Exception x){
+			System.out.println(x);
+			System.out.println("Error loading the customers");
+		}
 		return employees;
 	}
 
