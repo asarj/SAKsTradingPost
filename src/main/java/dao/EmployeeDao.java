@@ -512,15 +512,12 @@ public class EmployeeDao {
 				id = rs.getString(1);
 			}
 			con.close();
-			return "success";
+			return id;
 		}
 		catch(Exception e){
 			System.out.println(e);
-		}
-		if(id.equals("")){
 			return "NOT FOUND";
 		}
-		return id;
 	}
 
 }
