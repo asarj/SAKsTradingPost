@@ -516,7 +516,7 @@ public class EmployeeDao {
 		}
 		catch(Exception e){
 			System.out.println(e);
-			return "NOT FOUND";
+			return null;
 		}
 	}
 

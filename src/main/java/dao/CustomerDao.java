@@ -274,7 +274,7 @@ public class CustomerDao {
         }
         catch(Exception e){
             System.out.println(e);
-            return "NOT FOUND";
+            return null;
         }
 
 	}

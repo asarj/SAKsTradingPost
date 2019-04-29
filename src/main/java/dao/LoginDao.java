@@ -20,6 +20,7 @@ public class LoginDao {
 		
 		/*Sample data begins*/
 		Login login = new Login();
+
 		login.setRole(role);
 		return login;
 		/*Sample data ends*/
