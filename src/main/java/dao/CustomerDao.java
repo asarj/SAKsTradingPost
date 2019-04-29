@@ -1,11 +1,15 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.sql.*;
 
+import com.mysql.cj.protocol.Resultset;
 import model.Customer;
 import model.Location;
+
+import javax.xml.transform.Result;
 
 public class CustomerDao {
 	/*
@@ -55,19 +59,106 @@ public class CustomerDao {
 		 * The students code to fetch data from the database based on searchKeyword will be written here
 		 * Each record is required to be encapsulated as a "Customer" class object and added to the "customers" List
 		 */
-		
-		return getDummyCustomerList();
+
+		List<Customer> customers = getAllCustomers();
+		return customers;
 	}
 
-
-	public Customer getHighestRevenueCustomer() {
+    /* SOMETHING IS WRONG HERE, COME BACK WHEN STOCKS, ORDERS, AND TRANSACTIONS ARE WORKING*/
+	public Customer c {
 		/*
 		 * This method fetches the customer who generated the highest total revenue and returns it
 		 * The students code to fetch data from the database will be written here
 		 * The customer record is required to be encapsulated as a "Customer" class object
 		 */
+        Customer c = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+            con.setAutoCommit(false);
+            Statement stmt = con.createStatement();
+            try {
+                stmt.executeUpdate("DROP VIEW COrder");
+                stmt.executeUpdate("DROP VIEW CRevenue");
+                stmt.executeUpdate("DROP VIEW HighestRevenue");
+            } catch(SQLSyntaxErrorException s){
+                try{
+                    stmt.executeUpdate("DROP VIEW CRevenue");
+                    stmt.executeUpdate("DROP VIEW HighestRevenue");
+                }
+                catch(SQLSyntaxErrorException t){
+                    try{
+                        stmt.executeUpdate("DROP VIEW HighestRevenue");
+                    }
+                    catch(SQLSyntaxErrorException u){
 
-		return getDummyCustomer();
+                    }
+                }
+            } finally {
+                String sql = "Create View COrder (StockSymbol, StockType, LastName, FirstName, Fee)" +
+                        " AS " +
+                        "Select S.StockSymbol, S.Type, P.LastName, P.FirstName, T.Fee " +
+                        "From Trade Tr, Stock S, Transaction T, Client N, Person P " +
+                        "Where Tr.StockId = S.StockSymbol and T.Id = Tr.TransactionId and N.Id = Tr.AccountId and N.Id = P.SSN";
+                String sql2 = "Create View CRevenue (LastName, FirstName, Revenue) " +
+                        "AS " +
+                        "Select LastName, FirstName, SUM(Fee) " +
+                        "From COrder " +
+                        "GROUP BY LastName, FirstName ";
+                String sql3 = "Create View HighestRevenue (MaxRevenue) " +
+                        "AS " +
+                        "Select MAX(Revenue) " +
+                        "From CRevenue ";
+                String sql4 = "Select LastName, FirstName " +
+                        "From CRevenue "
+//                        + "Where Revenue >= HighestRevenue"
+                        ;
+//            PreparedStatement pst = con.prepareStatement(sql);
+//            PreparedStatement pst2 = con.prepareStatement(sql2);
+//            PreparedStatement pst3 = con.prepareStatement(sql3);
+//            PreparedStatement pst4 = con.prepareStatement(sql4);
+//            stmt.addBatch(sql);
+//            stmt.addBatch(sql2);
+//            stmt.addBatch(sql3);
+//            stmt.addBatch(sql4);
+//            int[] res = stmt.executeBatch();
+//            System.out.println(Arrays.toString(res));
+//            con.commit();
+                stmt.executeUpdate(sql);
+                stmt.executeUpdate(sql2);
+                stmt.executeUpdate(sql3);
+                ResultSet rs = stmt.executeQuery(sql4);
+                System.out.println(rs.toString());
+                c.setLastName(rs.getString(1));
+                System.out.println(c.getLastName());
+                c.setFirstName(rs.getString(2));
+                System.out.println(c.getFirstName());
+                ResultSet rt = stmt.executeQuery("select C.Id, P.FirstName, P.LastName, P.Address, L.City, L.State, L.Zipcode, P.Telephone, C.Email, C.CreditCardNumber, C.Rating from Client C, Person P, Location L where C.Id = P.SSN and P.Zipcode = L.Zipcode");
+                while(rt.next()){
+                    c.setClientId(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                    c.setSsn(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                    c.setId(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                    c.setFirstName(rt.getString(2));
+                    c.setLastName(rt.getString(3));
+                    c.setAddress(rt.getString(4));
+                    Location l = new Location();
+                    l.setCity(rt.getString(5));
+                    l.setState(rt.getString(6));
+                    l.setZipCode(rt.getInt(7));
+                    c.setLocation(l);
+                    c.setTelephone(rt.getString(8));
+                    c.setEmail(rt.getString(9));
+                    c.setCreditCard(rt.getString(10));
+                    c.setRating(rt.getInt(11));
+                }
+                con.close();
+                return c;
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+		return c;
 	}
 
 	public Customer getCustomer(String customerID) {
