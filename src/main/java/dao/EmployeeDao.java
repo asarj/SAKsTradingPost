@@ -293,14 +293,15 @@ public class EmployeeDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select P.Id, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, C.Email, C.CreditCardNumber, C.Rating " +
-					"from snisonoff.Client C, snisonoff.Location L, snisonoff.Person P " +
-					"where c.Id = P.SSN and P.Zipcode = L.Zipcode");
+			ResultSet rs = stmt.executeQuery("select E.SSN, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, P.Email, E.StartDate, E.HourlyRate " +
+					"from snisonoff.Employee E, snisonoff.Location L, snisonoff.Person P " +
+					"where E.SSN = P.SSN and P.Zipcode = L.Zipcode");
 			while(rs.next()){
-				Customer c = new Customer();
-				c.setSsn(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-				c.setClientId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				Employee c = new Employee();
+				c.setSsn(rs.getString(1));
+				c.setEmployeeID(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
 				c.setId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				c.setSsn(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
 				c.setLastName(rs.getString(2));
 				c.setFirstName(rs.getString(3));
 				c.setAddress(rs.getString(4));
@@ -310,15 +311,15 @@ public class EmployeeDao {
 				l.setState(rs.getString(7));
 				c.setLocation(l);
 				c.setEmail(rs.getString(8));
-				c.setCreditCard(rs.getString(9));
-				c.setRating(rs.getInt(10));
-				customers.add(c);
+				c.setStartDate(rs.getString(9));
+				c.setHourlyRate(rs.getInt(10));
+				employees.add(c);
 			}
 			con.close();
 		}
 		catch(Exception x){
 			System.out.println(x);
-			System.out.println("Error loading the customers");
+			System.out.println("Error loading the employees");
 		}
 		return employees;
 	}
@@ -331,17 +332,167 @@ public class EmployeeDao {
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
 
-		return getDummyEmployee();
+		Employee c = null;
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from snisonoff.Employee where SSN=" +  employeeID.replace("-", ""));
+			while (rs.next()) {
+				System.out.println(rs.getString(1) + "  " + rs.getInt(2) + "  " + rs.getString(3) + "  " + rs.getString(4));
+				// Column 1 = email, column 2 = rating, column 3 = credit card num, column 4 = id
+				c = new Employee();
+				c.setEmployeeID(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				c.setSsn(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				c.setId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+				c.setStartDate(rs.getString(3));
+				c.setHourlyRate(rs.getFloat(4));
+				c.setLevel(rs.getString(5));
+			}
+			ResultSet rt = stmt.executeQuery("select * from snisonoff.Person where SSN=" + employeeID.replace("-", ""));
+			String zip = "";
+			while (rt.next()) {
+				c.setId(rt.getString(1));
+				c.setSsn(rt.getString(1));
+				c.setLastName(rt.getString(2));
+				c.setFirstName(rt.getString(3));
+				c.setAddress(rt.getString(4));
+				zip = rt.getString(5);
+				c.setTelephone(rt.getString(6));
+			}
+//            rt.close();
+			ResultSet ru = stmt.executeQuery("select * from snisonoff.Location where Zipcode=" + zip);
+			while (ru.next()) {
+				Location l = new Location();
+				l.setZipCode(ru.getInt(1));
+				l.setCity(ru.getString(2));
+				l.setState(ru.getString(3));
+				c.setLocation(l);
+			}
+//            ru.close();
+//			rs.close();
+			con.close();
+		}
+		catch(Exception x){
+			System.out.println(x);
+			System.out.println("Employee not found");
+		}
+		if(c == null){
+			return null;
+		}
+		return c;
 	}
-	
+
+	/* SOMETHING IS WRONG HERE, COME BACK WHEN STOCKS, ORDERS, AND TRANSACTIONS ARE WORKING*/
 	public Employee getHighestRevenueEmployee() {
 		
 		/*
 		 * The students code to fetch employee data who generated the highest revenue will be written here
 		 * The record is required to be encapsulated as a "Employee" class object
 		 */
-		
-		return getDummyEmployee();
+
+		Employee c = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+			con.setAutoCommit(false);
+			Statement stmt = con.createStatement();
+			try {
+				stmt.executeUpdate("DROP VIEW EmployeeName");
+				stmt.executeUpdate("DROP VIEW CROrder");
+				stmt.executeUpdate("DROP VIEW CRRevenue");
+				stmt.executeUpdate("DROP VIEW HighestRevenue");
+			} catch(SQLSyntaxErrorException s){
+				try{
+					stmt.executeUpdate("DROP VIEW CROrder");
+					stmt.executeUpdate("DROP VIEW CRRevenue");
+					stmt.executeUpdate("DROP VIEW HighestRevenue");
+				}
+				catch(SQLSyntaxErrorException t){
+					try{
+						stmt.executeUpdate("DROP VIEW CRRevenue");
+						stmt.executeUpdate("DROP VIEW HighestRevenue");
+					}
+					catch(SQLSyntaxErrorException u){
+						try{
+							stmt.executeUpdate("DROP VIEW HighestRevenue");
+						}
+						catch(SQLSyntaxErrorException v){
+
+						}
+					}
+				}
+			} finally {
+				String sql5 = "Create View EmployeeName (Id, SSN, LastName, FirstName) " +
+						"AS " +
+						"Select E.Id, P.SSN, P.LastName, P.FirstName " +
+						"From Employee E, Person P " +
+						"Where E.SSN = P.SSN";
+				String sql = "Create View COrder (StockSymbol, StockType, LastName, FirstName, Fee)" +
+						" AS " +
+						"Select S.StockSymbol, S.Type, P.LastName, P.FirstName, T.Fee " +
+						"From Trade Tr, Stock S, Transaction T, Client N, Person P " +
+						"Where Tr.StockId = S.StockSymbol and T.Id = Tr.TransactionId and N.Id = Tr.AccountId and N.Id = P.SSN";
+				String sql2 = "Create View CRevenue (LastName, FirstName, Revenue) " +
+						"AS " +
+						"Select LastName, FirstName, SUM(Fee) " +
+						"From COrder " +
+						"GROUP BY LastName, FirstName ";
+				String sql3 = "Create View HighestRevenue (MaxRevenue) " +
+						"AS " +
+						"Select MAX(Revenue) " +
+						"From CRevenue ";
+				String sql4 = "Select LastName, FirstName " +
+						"From CRevenue "
+//                        + "Where Revenue >= HighestRevenue"
+						;
+//            PreparedStatement pst = con.prepareStatement(sql);
+//            PreparedStatement pst2 = con.prepareStatement(sql2);
+//            PreparedStatement pst3 = con.prepareStatement(sql3);
+//            PreparedStatement pst4 = con.prepareStatement(sql4);
+//            stmt.addBatch(sql);
+//            stmt.addBatch(sql2);
+//            stmt.addBatch(sql3);
+//            stmt.addBatch(sql4);
+//            int[] res = stmt.executeBatch();
+//            System.out.println(Arrays.toString(res));
+//            con.commit();
+				stmt.executeUpdate(sql5);
+				stmt.executeUpdate(sql);
+				stmt.executeUpdate(sql2);
+				stmt.executeUpdate(sql3);
+				ResultSet rs = stmt.executeQuery(sql4);
+				System.out.println(rs.toString());
+				c.setLastName(rs.getString(1));
+				System.out.println(c.getLastName());
+				c.setFirstName(rs.getString(2));
+				System.out.println(c.getFirstName());
+				ResultSet rt = stmt.executeQuery("select E.SSN, P.FirstName, P.LastName, P.Address, L.City, L.State, L.Zipcode, P.Telephone, P.Email, E.StartDate, E.HourlyRate from Employee E, Person P, Location L where E.SSN = P.SSN and P.Zipcode = L.Zipcode");
+				while(rt.next()){
+					c.setEmployeeID(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+					c.setSsn(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+					c.setId(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+					c.setFirstName(rt.getString(2));
+					c.setLastName(rt.getString(3));
+					c.setAddress(rt.getString(4));
+					Location l = new Location();
+					l.setCity(rt.getString(5));
+					l.setState(rt.getString(6));
+					l.setZipCode(rt.getInt(7));
+					c.setLocation(l);
+					c.setTelephone(rt.getString(8));
+					c.setEmail(rt.getString(9));
+					c.setStartDate(rt.getString(10));
+					c.setHourlyRate(rt.getFloat(11));
+				}
+				con.close();
+				return c;
+			}
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+		return c;
 	}
 
 	public String getEmployeeID(String username) {
@@ -351,7 +502,25 @@ public class EmployeeDao {
 		 * The Employee ID is required to be returned as a String
 		 */
 
-		return "111-11-1111";
+		String id = "";
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("select SSN from snisonoff.Employee where Email=" + username);
+			while(rs.next()){
+				id = rs.getString(1);
+			}
+			con.close();
+			return "success";
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
+		if(id.equals("")){
+			return "NOT FOUND";
+		}
+		return id;
 	}
 
 }
