@@ -1,5 +1,7 @@
 package dao;
 
+import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,92 @@ public class EmployeeDao {
 		 */
 		
 		/*Sample data begins*/
-		return "success";
+		if(employee == null){
+			return "failure";
+		}
+		int zip = employee.getLocation().getZipCode();
+		String city = employee.getLocation().getCity();
+		String state = employee.getLocation().getState();
+		String email = employee.getEmail();
+		String startDate = employee.getStartDate();
+		float hourlyRate = employee.getHourlyRate();
+		int empId = Integer.parseInt(employee.getEmployeeID().replace("-", ""));
+		String level = employee.getLevel();
+		int SSN = Integer.parseInt(employee.getSsn().replace("-", ""));
+		String lastName = employee.getLastName();
+		String firstName = employee.getFirstName();
+		String address = employee.getAddress();
+		String tel = employee.getTelephone();
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+			Statement stmt = con.createStatement();
+			String sql = "insert into snisonoff.Location values (?, ?, ?)";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setInt(1, zip);
+			pst.setString(2, city);
+			pst.setString(3, state);
+			pst.executeUpdate();
+
+			sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, SSN);
+			pst.setString(2, lastName);
+			pst.setString(3, firstName);
+			pst.setString(4, address);
+			pst.setInt(5, zip);
+			pst.setString(6, tel);
+			pst.executeUpdate();
+
+			sql = "insert into snisonoff.Employee values (?, ?, ?, ?, ?)";
+			pst = con.prepareStatement(sql);
+			pst.setInt(1, empId);
+			pst.setInt(2, SSN);
+			pst.setDate(3, Date.valueOf(startDate));
+			pst.setFloat(4, hourlyRate);
+			pst.setString(5, level);
+			pst.executeUpdate();
+
+			con.close();
+			return "success";
+		}
+		catch(SQLIntegrityConstraintViolationException j){
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+				Statement stmt = con.createStatement();
+				String sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+				PreparedStatement pst = con.prepareStatement(sql);
+				pst.setInt(1, SSN);
+				pst.setString(2, lastName);
+				pst.setString(3, firstName);
+				pst.setString(4, address);
+				pst.setInt(5, zip);
+				pst.setString(6, tel);
+				pst.executeUpdate();
+
+				sql = "insert into snisonoff.Employee values (?, ?, ?, ?, ?)";
+				pst = con.prepareStatement(sql);
+				pst.setInt(1, empId);
+				pst.setInt(2, SSN);
+				pst.setDate(3, Date.valueOf(startDate));
+				pst.setFloat(4, hourlyRate);
+				pst.setString(5, level);
+				pst.executeUpdate();
+
+				con.close();
+				return "success";
+			}
+			catch(Exception s){
+				System.out.println(s);
+				return "failure";
+			}
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return "failure";
+		}
 		/*Sample data ends*/
 
 	}
