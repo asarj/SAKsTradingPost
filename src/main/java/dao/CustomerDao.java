@@ -65,7 +65,7 @@ public class CustomerDao {
 	}
 
     /* SOMETHING IS WRONG HERE, COME BACK WHEN STOCKS, ORDERS, AND TRANSACTIONS ARE WORKING*/
-	public Customer c {
+	public Customer getHighestRevenueCustomer() {
 		/*
 		 * This method fetches the customer who generated the highest total revenue and returns it
 		 * The students code to fetch data from the database will be written here
