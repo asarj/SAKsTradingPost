@@ -40,7 +40,7 @@
 	    <input type="text" class="form-control" id="employeeFirstName" name="employeeFirstName" placeholder="First Name" value=${editEmployee.firstName} required>
 	  </div>
   	  <div class="form-group">
-	    <label for="employeeLastName">last Name</label>
+	    <label for="employeeLastName">Last Name</label>
 	    <input type="text" class="form-control" id="employeeLastName" name="employeeLastName" placeholder="Last Name" value=${editEmployee.lastName} required>
 	  </div>
    	  <div class="form-group">
@@ -49,15 +49,15 @@
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeCity">City</label>
-	    <input type="text" class="form-control" id="employeeCity" name="employeeCity" placeholder="City" value=${editEmployee.city} required>
+	    <input type="text" class="form-control" id="employeeCity" name="employeeCity" placeholder="City" value=${editEmployee.location.city} required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeState">State</label>
-	    <input type="text" class="form-control" id="employeeState" name="employeeState" placeholder="State" value=${editEmployee.state} required>
+	    <input type="text" class="form-control" id="employeeState" name="employeeState" placeholder="State" value=${editEmployee.location.state} required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeZipcode">Zipcode</label>
-	    <input type="text" class="form-control" id="employeeZipcode" name="employeeZipcode" placeholder="Zipcode" value=${editEmployee.zipCode} required>
+	    <input type="text" class="form-control" id="employeeZipcode" name="employeeZipcode" placeholder="Zipcode" value=${editEmployee.location.zipCode} required>
 	  </div>
    	  <div class="form-group">
 	    <label for="employeeTelephone">Telephone</label>

@@ -161,7 +161,90 @@ public class EmployeeDao {
 		 */
 		
 		/*Sample data begins*/
-		return "success";
+		if(employee == null){
+			return "failure";
+		}
+		int zip = employee.getLocation().getZipCode();
+		String city = employee.getLocation().getCity();
+		String state = employee.getLocation().getState();
+		String email = employee.getEmail();
+		String startDate = employee.getStartDate();
+		float hourlyRate = employee.getHourlyRate();
+		int empId = Integer.parseInt(employee.getEmployeeID().replace("-", ""));
+		String level = employee.getLevel();
+		int SSN = Integer.parseInt(employee.getSsn().replace("-", ""));
+		String lastName = employee.getLastName();
+		String firstName = employee.getFirstName();
+		String address = employee.getAddress();
+		String tel = employee.getTelephone();
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+			Statement stmt = con.createStatement();
+			String sql = "update snisonoff.Location set City = ?, State = ? where Zipcode = ?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, city);
+			pst.setString(2, state);
+			pst.setInt(3, zip);
+			pst.executeUpdate();
+
+			sql = "update snisonoff.Person set LastName= ?, firstName = ?, Address = ?, Zipcode = ?, Telephone = ? where SSN = ?";
+			pst = con.prepareStatement(sql);
+			pst.setString(1, lastName);
+			pst.setString(2, firstName);
+			pst.setString(3, address);
+			pst.setInt(4, zip);
+			pst.setString(5, tel);
+			pst.setInt(6, SSN);
+			pst.executeUpdate();
+
+			sql = "update snisonoff.Employee set StartDate = ?, HourlyRate = ?, Position = ? where SSN = ?";
+			pst = con.prepareStatement(sql);
+			pst.setDate(1, Date.valueOf(startDate));
+			pst.setFloat(2, hourlyRate);
+			pst.setString(3, level);
+			pst.setInt(4, SSN);
+			pst.executeUpdate();
+
+			con.close();
+			return "success";
+		}
+		catch(SQLIntegrityConstraintViolationException j){
+			try{
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+				Statement stmt = con.createStatement();
+				String sql = "update snisonoff.Person set LastName= ?, firstName = ?, Address = ?, Zipcode = ?, Telephone = ? where SSN = ?";
+				PreparedStatement pst = con.prepareStatement(sql);
+				pst.setString(1, lastName);
+				pst.setString(2, firstName);
+				pst.setString(3, address);
+				pst.setInt(4, zip);
+				pst.setString(5, tel);
+				pst.setInt(6, SSN);
+				pst.executeUpdate();
+
+				sql = "update snisonoff.Employee set StartDate = ?, HourlyRate = ?, Position = ? where SSN = ?";
+				pst = con.prepareStatement(sql);
+				pst.setDate(1, Date.valueOf(startDate));
+				pst.setFloat(2, hourlyRate);
+				pst.setString(3, level);
+				pst.setInt(4, SSN);
+				pst.executeUpdate();
+
+				con.close();
+				return "success";
+			}
+			catch(Exception s){
+				System.out.println(s);
+				return "failure";
+			}
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return "failure";
+		}
 		/*Sample data ends*/
 
 	}
@@ -174,9 +257,26 @@ public class EmployeeDao {
 		 */
 		
 		/*Sample data begins*/
-		return "success";
+		Employee c = getEmployee(employeeID);
+		if (c == null){
+			return "failure";
+		}
+		else{
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
+				Statement stmt = con.createStatement();
+				stmt.execute("delete from snisonoff.Employee where Id=" + employeeID.replace("-", ""));
+				stmt.execute("delete from snisonoff.Person where Id=" + employeeID.replace("-", ""));
+				con.close();
+				return "success";
+			}
+			catch(Exception e){
+				System.out.println(e);
+				return "failure";
+			}
+		}
 		/*Sample data ends*/
-
 	}
 
 	
