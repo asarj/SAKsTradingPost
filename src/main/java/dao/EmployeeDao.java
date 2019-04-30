@@ -89,7 +89,7 @@ public class EmployeeDao {
 			pst.setString(3, state);
 			pst.executeUpdate();
 
-			sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+			sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?, ?)";
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, SSN);
 			pst.setString(2, lastName);
@@ -97,6 +97,7 @@ public class EmployeeDao {
 			pst.setString(4, address);
 			pst.setInt(5, zip);
 			pst.setString(6, tel);
+			pst.setString(7, email);
 			pst.executeUpdate();
 
 			sql = "insert into snisonoff.Employee values (?, ?, ?, ?, ?)";
@@ -116,7 +117,7 @@ public class EmployeeDao {
 				Class.forName("com.mysql.jdbc.Driver");
 				Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
 				Statement stmt = con.createStatement();
-				String sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?)";
+				String sql = "insert into snisonoff.Person values (?, ?, ?, ?, ?, ?, ?)";
 				PreparedStatement pst = con.prepareStatement(sql);
 				pst.setInt(1, SSN);
 				pst.setString(2, lastName);
@@ -124,6 +125,7 @@ public class EmployeeDao {
 				pst.setString(4, address);
 				pst.setInt(5, zip);
 				pst.setString(6, tel);
+				pst.setString(7, email);
 				pst.executeUpdate();
 
 				sql = "insert into snisonoff.Employee values (?, ?, ?, ?, ?)";

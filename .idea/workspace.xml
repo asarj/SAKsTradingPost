@@ -6,9 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="fixed another bug in getId method in customerdao and employeedao to use preparedstatements">
+    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="login method is functional, commented it out until testing resumes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/dao/LoginDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/LoginDao.java" afterDir="false" />
     </list>
@@ -36,53 +35,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/dao/LoginDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="125" column="45" selection-start-line="125" selection-start-column="45" selection-end-line="125" selection-end-column="45" />
+            <state relative-caret-position="-552">
+              <caret line="143" selection-start-line="143" selection-end-line="143" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/resources/LoginController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-22">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1086">
-              <caret line="339" column="24" selection-start-line="339" selection-start-column="24" selection-end-line="339" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="509" column="49" lean-forward="true" selection-start-line="509" selection-start-column="49" selection-end-line="509" selection-end-column="49" />
-              <folding>
-                <element signature="e#9559#9569#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/model/Login.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -160,8 +117,8 @@
         <option value="$PROJECT_DIR$/src/main/java/resources/DeleteCustomerController.java" />
         <option value="$PROJECT_DIR$/src/main/java/resources/AddCustomerController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/editEmployee.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/LoginDao.java" />
       </list>
     </option>
@@ -263,7 +220,7 @@
     <property name="SearchEverywhereHistoryKey" value="web.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;suggest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetStockSuggestionsController.java&#10;getstocks&#9;PSI&#9;JAVA://resources.GetStocksController&#10;GetOrdersByCu&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetOrdersByCustomerController.java&#10;xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;SetSt&#9;PSI&#9;JAVA://resources.SetStockPriceController&#10;getStocksByCustome&#9;PSI&#9;JAVA://resources.GetStocksByCustomerController&#10;web&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;etBest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetBestsellersController.java&#10;manager.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/managerHome.jsp&#10;viewsear&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/ViewSearchStocksController.java&#10;home.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;sug&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/PersonalizedSuggestionsController.java&#10;best&#9;PSI&#9;JAVA://resources.GetBestsellersForCustomerController&#10;home.&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;viewStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/viewSetStockPrice.jsp&#10;loginDao&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/dao/LoginDao.java&#10;login&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/model/Login.java&#10;GetHighestRevenueEmploye&#9;PSI&#9;JAVA://dao.EmployeeDao#getHighestRevenueEmployee&#10;showHigh&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showHighestRevenueEmployee.jsp&#10;viewSetStockPrice&#9;ACTION&#9;null&#10;setStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/setStockPrice.jsp&#10;customerrepre&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/customerRepresentativeHome.jsp&#10;home&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;inde&#9;RUN_CONFIGURATION&#9;index.jsp&#10;index&#9;RUN_CONFIGURATION&#9;index.jsp&#10;showcus&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showCustomerMailingList.jsp" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556585271620" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556589535263" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -1035,7 +992,7 @@
       <workItem from="1554162563110" duration="1461000" />
       <workItem from="1554740213348" duration="2032000" />
       <workItem from="1554742314847" duration="1718000" />
-      <workItem from="1555173564841" duration="45894000" />
+      <workItem from="1555173564841" duration="49971000" />
     </task>
     <task id="LOCAL-00001" summary="Figured how to connect to db through java code, example can be found in customerdao">
       <created>1556420336080</created>
@@ -1156,11 +1113,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556581148820</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="login method is functional, commented it out until testing resumes">
+      <created>1556585305779</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1556585305779</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147392000" />
+    <option name="totallyTimeSpent" value="151469000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1303,34 +1267,17 @@
     <MESSAGE value="fixed bug in getId method in customerdao and employeedao" />
     <MESSAGE value="fixed another bug in getId method in customerdao and employeedao" />
     <MESSAGE value="fixed another bug in getId method in customerdao and employeedao to use preparedstatements" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed another bug in getId method in customerdao and employeedao to use preparedstatements" />
+    <MESSAGE value="login method is functional, commented it out until testing resumes" />
+    <option name="LAST_COMMIT_MESSAGE" value="login method is functional, commented it out until testing resumes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/resources/AddCustomerController.java</url>
-          <line>44</line>
-          <properties />
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/resources/AddCustomerController.java</url>
-          <line>35</line>
-          <properties />
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/resources/AddEmployeeController.java</url>
           <line>34</line>
           <properties />
           <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/resources/AddEmployeeController.java</url>
-          <line>44</line>
-          <properties />
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/resources/GetStockSuggestionsController.java</url>
@@ -1442,13 +1389,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/Stock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/viewSearchStocks.jsp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1614,20 +1554,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/resources/EditCustomerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/resources/AddCustomerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1215">
-          <caret line="73" column="35" lean-forward="true" selection-start-line="73" selection-start-column="35" selection-end-line="73" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/resources/DeleteCustomerController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
@@ -1660,13 +1586,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/resources/AddEmployeeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="86">
-          <caret line="76" column="36" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -1726,6 +1645,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/resources/EditCustomerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/resources/EditEmployeeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-240">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="102" column="74" lean-forward="true" selection-start-line="102" selection-start-column="74" selection-end-line="102" selection-end-column="74" />
+          <folding>
+            <element signature="e#9559#9569#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/model/Login.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -1735,20 +1678,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1086">
+        <state relative-caret-position="-433">
           <caret line="339" column="24" selection-start-line="339" selection-start-column="24" selection-end-line="339" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="509" column="49" lean-forward="true" selection-start-line="509" selection-start-column="49" selection-end-line="509" selection-end-column="49" />
-          <folding>
-            <element signature="e#9559#9569#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1760,10 +1693,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/resources/AddEmployeeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="718">
+          <caret line="97" selection-start-line="97" selection-end-line="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/resources/AddCustomerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="96" selection-start-line="96" selection-end-line="96" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/LoginDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="125" column="45" selection-start-line="125" selection-start-column="45" selection-end-line="125" selection-end-column="45" />
+        <state relative-caret-position="-552">
+          <caret line="143" selection-start-line="143" selection-end-line="143" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
