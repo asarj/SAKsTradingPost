@@ -507,7 +507,7 @@ public class EmployeeDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
 			Statement stmt = con.createStatement();
-			String sql = "select SSN from snisonoff.Employee where Email=?";
+			String sql = "select P.SSN from snisonoff.Employee E, snisonoff.Person P where E.SSN = P.SSN and P.Email=?";
 			PreparedStatement pst = con.prepareStatement(sql);
 			pst.setString(1, username);
 			ResultSet rs = pst.executeQuery();
