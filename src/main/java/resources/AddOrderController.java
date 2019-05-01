@@ -53,7 +53,7 @@ public class AddOrderController extends HttpServlet {
         else
         {
             EmployeeDao employeeDao = new EmployeeDao();
-            employeeId = (String) request.getSession(false).getAttribute("employeeID");
+            employeeId = (String) request.getSession(false).getAttribute("employeeId");
             employee = employeeDao.getEmployee(employeeId);
         }
         String numShares = request.getParameter("orderNumShares");
