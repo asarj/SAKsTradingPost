@@ -6,9 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="fixed typo in AddOrderController">
+    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="fixed typos in AddOrderController">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/resources/AddOrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/resources/AddOrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/LoginDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/LoginDao.java" afterDir="false" />
     </list>
     <ignored path="Jsp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/dao/LoginDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3003">
-              <caret line="143" selection-start-line="143" selection-end-line="143" />
+            <state relative-caret-position="-823">
+              <caret line="34" column="16" lean-forward="true" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -46,8 +46,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2174">
-              <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+            <state relative-caret-position="249">
+              <caret line="255" column="18" selection-start-line="255" selection-start-column="18" selection-end-line="255" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -55,19 +55,12 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/resources/AddOrderController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="55" column="84" selection-start-line="55" selection-start-column="84" selection-end-line="55" selection-end-column="84" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/viewAddCustomerOrder.jsp">
+        <entry file="file://$PROJECT_DIR$/src/main/java/dao/OrderDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-352" />
+            <state relative-caret-position="1220">
+              <caret line="113" column="51" selection-start-line="113" selection-start-column="51" selection-end-line="113" selection-end-column="51" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -156,9 +149,9 @@
         <option value="$PROJECT_DIR$/src/main/java/resources/AddCustomerController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/editEmployee.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/dao/EmployeeDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/LoginDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/CustomerDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/resources/AddOrderController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/LoginDao.java" />
       </list>
     </option>
   </component>
@@ -259,7 +252,7 @@
     <property name="SearchEverywhereHistoryKey" value="web.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;suggest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetStockSuggestionsController.java&#10;getstocks&#9;PSI&#9;JAVA://resources.GetStocksController&#10;GetOrdersByCu&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetOrdersByCustomerController.java&#10;xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;SetSt&#9;PSI&#9;JAVA://resources.SetStockPriceController&#10;getStocksByCustome&#9;PSI&#9;JAVA://resources.GetStocksByCustomerController&#10;web&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;etBest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetBestsellersController.java&#10;manager.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/managerHome.jsp&#10;viewsear&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/ViewSearchStocksController.java&#10;home.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;sug&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/PersonalizedSuggestionsController.java&#10;best&#9;PSI&#9;JAVA://resources.GetBestsellersForCustomerController&#10;home.&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;viewStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/viewSetStockPrice.jsp&#10;loginDao&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/dao/LoginDao.java&#10;login&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/model/Login.java&#10;GetHighestRevenueEmploye&#9;PSI&#9;JAVA://dao.EmployeeDao#getHighestRevenueEmployee&#10;showHigh&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showHighestRevenueEmployee.jsp&#10;viewSetStockPrice&#9;ACTION&#9;null&#10;setStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/setStockPrice.jsp&#10;customerrepre&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/customerRepresentativeHome.jsp&#10;home&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;inde&#9;RUN_CONFIGURATION&#9;index.jsp&#10;index&#9;RUN_CONFIGURATION&#9;index.jsp&#10;showcus&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showCustomerMailingList.jsp" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556753978992" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556858954187" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
@@ -1031,7 +1024,7 @@
       <workItem from="1554162563110" duration="1461000" />
       <workItem from="1554740213348" duration="2032000" />
       <workItem from="1554742314847" duration="1718000" />
-      <workItem from="1555173564841" duration="53606000" />
+      <workItem from="1555173564841" duration="55740000" />
     </task>
     <task id="LOCAL-00001" summary="Figured how to connect to db through java code, example can be found in customerdao">
       <created>1556420336080</created>
@@ -1187,11 +1180,18 @@
       <option name="project" value="LOCAL" />
       <updated>1556753732916</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fixed typos in AddOrderController">
+      <created>1556753998008</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1556753998008</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155104000" />
+    <option name="totallyTimeSpent" value="157238000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1203,10 +1203,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="0" width="2560" height="1440" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21026894" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13672496" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info id="Capture Tool" order="3" />
@@ -1216,13 +1216,13 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32870865" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49511003" weight="0.33191034" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3906083" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49511003" weight="0.33157498" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3903542" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32870865" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49938875" visible="true" weight="0.32870865" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.32657418" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49938875" weight="0.32870865" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.32629994" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49755502" weight="0.3276414" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50061125" side_tool="true" weight="0.32870865" />
       <window_info anchor="bottom" id="Application Servers" order="11" weight="0.32550693" />
@@ -1338,7 +1338,8 @@
     <MESSAGE value="addUser() method is functional" />
     <MESSAGE value="prepare merge" />
     <MESSAGE value="fixed typo in AddOrderController" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed typo in AddOrderController" />
+    <MESSAGE value="fixed typos in AddOrderController" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed typos in AddOrderController" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1451,6 +1452,12 @@
           <properties />
           <option name="timeStamp" value="68" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/dao/LoginDao.java</url>
+          <line>24</line>
+          <properties />
+          <option name="timeStamp" value="78" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -1459,18 +1466,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/searchCustomer.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/viewSummaryListing.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/viewSearchOrders.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="123" selection-start-line="36" selection-start-column="123" selection-end-line="36" selection-end-column="123" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md" />
     <entry file="file://$PROJECT_DIR$/src/main/java/resources/ViewSetStockPriceController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -1501,13 +1496,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/footer.jsp">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/resources/GetOrdersByCustomerNameController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="46" column="82" selection-start-line="46" selection-start-column="82" selection-end-line="46" selection-end-column="82" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/model/Trade.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1688,13 +1676,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/OrderDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2098">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/SalesDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="332">
@@ -1751,26 +1732,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/LoginDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3003">
-          <caret line="143" selection-start-line="143" selection-end-line="143" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2174">
-          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/viewAddOrder.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1153" />
@@ -1781,10 +1742,68 @@
         <state relative-caret-position="-352" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/showSalesReport.jsp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Order.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/showOrders.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/resources/GetOrdersByCustomerNameController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/resources/AddOrderController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
+        <state relative-caret-position="347">
           <caret line="55" column="84" selection-start-line="55" selection-start-column="84" selection-end-line="55" selection-end-column="84" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/OrderPriceEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/OrderDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1220">
+          <caret line="113" column="51" selection-start-line="113" selection-start-column="51" selection-end-line="113" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/CustomerDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="255" column="18" selection-start-line="255" selection-start-column="18" selection-end-line="255" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/LoginDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-823">
+          <caret line="34" column="16" lean-forward="true" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
