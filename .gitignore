@@ -12,11 +12,11 @@ target/
 .mtj.tmp/
 
 # IntelliJ Idea Files
-.idea/
-.settings/
+.idea
+.settings
 
 # Eclipse Project File
-.project/
+.project
 
 # Package Files #
 *.jar
