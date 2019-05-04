@@ -6,29 +6,8 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="did half of the submitOrder() method, fixed gitignore">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Jsp_war.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Jsp_war_exploded.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Java_EE_6_Java_EE_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_2_6_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_el_el_api_2_2_1_b04.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_javax_servlet_api_3_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jstl_jstl_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_4_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_3_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Jsp.iml" beforeDir="false" />
+    <list default="true" id="9897c18f-660b-4616-8292-c7e95b418d95" name="Default" comment="fixed deployment issues">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="Jsp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,7 +45,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dao/OrderDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3528">
+            <state relative-caret-position="441">
               <caret line="168" selection-start-line="168" selection-end-line="168" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -76,10 +55,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+        <entry file="file://$PROJECT_DIR$/src/main/java/resources/EditCustomerController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="705">
+              <caret line="46" selection-start-line="46" selection-end-line="46" />
             </state>
           </provider>
         </entry>
@@ -249,6 +228,53 @@
               <item name="final" type="b2602c69:ProjectViewProjectNode" />
               <item name="final" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="final" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -261,7 +287,7 @@
     <property name="SearchEverywhereHistoryKey" value="web.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;suggest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetStockSuggestionsController.java&#10;getstocks&#9;PSI&#9;JAVA://resources.GetStocksController&#10;GetOrdersByCu&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetOrdersByCustomerController.java&#10;xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;SetSt&#9;PSI&#9;JAVA://resources.SetStockPriceController&#10;getStocksByCustome&#9;PSI&#9;JAVA://resources.GetStocksByCustomerController&#10;web&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;.xml&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/WEB-INF/web.xml&#10;etBest&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/GetBestsellersController.java&#10;manager.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/managerHome.jsp&#10;viewsear&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/ViewSearchStocksController.java&#10;home.jsp&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;sug&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/resources/PersonalizedSuggestionsController.java&#10;best&#9;PSI&#9;JAVA://resources.GetBestsellersForCustomerController&#10;home.&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;viewStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/viewSetStockPrice.jsp&#10;loginDao&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/dao/LoginDao.java&#10;login&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/java/model/Login.java&#10;GetHighestRevenueEmploye&#9;PSI&#9;JAVA://dao.EmployeeDao#getHighestRevenueEmployee&#10;showHigh&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showHighestRevenueEmployee.jsp&#10;viewSetStockPrice&#9;ACTION&#9;null&#10;setStock&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/setStockPrice.jsp&#10;customerrepre&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/customerRepresentativeHome.jsp&#10;home&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/home.jsp&#10;inde&#9;RUN_CONFIGURATION&#9;index.jsp&#10;index&#9;RUN_CONFIGURATION&#9;index.jsp&#10;showcus&#9;FILE&#9;file:///Users/akshay/Projects/cse305/CSE305/src/main/webapp/showCustomerMailingList.jsp" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557004826873" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1557005981444" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -1097,7 +1123,7 @@
       <workItem from="1554740213348" duration="2032000" />
       <workItem from="1554742314847" duration="1718000" />
       <workItem from="1555173564841" duration="71271000" />
-      <workItem from="1557004752612" duration="18000" />
+      <workItem from="1557004752612" duration="655000" />
     </task>
     <task id="LOCAL-00001" summary="Figured how to connect to db through java code, example can be found in customerdao">
       <created>1556420336080</created>
@@ -1274,11 +1300,25 @@
       <option name="project" value="LOCAL" />
       <updated>1556953382640</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="fixed deployment issues">
+      <created>1557004885790</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1557004885790</updated>
+    </task>
+    <task id="LOCAL-00027" summary="fixed deployment issues">
+      <created>1557004906458</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1557004906458</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="172787000" />
+    <option name="totallyTimeSpent" value="173424000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1290,9 +1330,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <frame x="0" y="0" width="2560" height="1440" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13814181" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12321144" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Web" order="2" side_tool="true" />
       <window_info id="Capture Tool" order="3" />
@@ -1302,15 +1343,15 @@
       <window_info id="Image Layers" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32856065" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49562797" weight="0.33157498" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49523053" visible="true" weight="0.2976639" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3903542" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32870865" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49938875" weight="0.32705352" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.32629994" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49880764" weight="0.32705352" />
+      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49938875" weight="0.32550693" />
       <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49755502" weight="0.3276414" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.504372" side_tool="true" visible="true" weight="0.33084312" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5011924" side_tool="true" weight="0.32705352" />
       <window_info anchor="bottom" id="Application Servers" order="11" weight="0.32550693" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" weight="0.3276414" />
       <window_info anchor="bottom" id="Docker" order="13" show_stripe_button="false" />
@@ -1410,7 +1451,8 @@
     <MESSAGE value="fixed typos in AddOrderController" />
     <MESSAGE value="fixed login error" />
     <MESSAGE value="did half of the submitOrder() method, fixed gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="did half of the submitOrder() method, fixed gitignore" />
+    <MESSAGE value="fixed deployment issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed deployment issues" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1531,13 +1573,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/Trade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/model/Account.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -1693,13 +1728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/resources/EditCustomerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/resources/EditEmployeeController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-240">
@@ -1841,16 +1869,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/OrderDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3528">
-          <caret line="168" selection-start-line="168" selection-end-line="168" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/model/Order.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="693">
@@ -1892,10 +1910,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2415" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="378">
+          <caret line="18" column="8" lean-forward="true" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/OrderDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="168" selection-start-line="168" selection-end-line="168" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/resources/EditCustomerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="705">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
     </entry>
@@ -1906,10 +1946,10 @@
         <settings>
           <artifact-editor>
             <show-content>
+              <type id="library" />
+              <type id="javaee-facet-resources" />
               <type id="artifact" />
               <type id="jpa-descriptors" />
-              <type id="javaee-facet-resources" />
-              <type id="library" />
             </show-content>
           </artifact-editor>
           <last-edited>Jsp:war</last-edited>
@@ -1965,6 +2005,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1984,7 +2025,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Java EE 6-Java EE 6</last-edited>
+          <last-edited>Maven: com.google.protobuf:protobuf-java:2.6.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
