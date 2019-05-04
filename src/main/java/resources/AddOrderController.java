@@ -53,7 +53,7 @@ public class AddOrderController extends HttpServlet {
         else
         {
             EmployeeDao employeeDao = new EmployeeDao();
-            employeeId = (String) request.getSession(false).getAttribute("employeeId");
+            employeeId = (String) request.getSession(false).getAttribute("employeeID");
             employee = employeeDao.getEmployee(employeeId);
         }
         String numShares = request.getParameter("orderNumShares");
@@ -74,6 +74,12 @@ public class AddOrderController extends HttpServlet {
         if (type.equals("Market"))
         {
             MarketOrder order = new MarketOrder();
+//            stock.setNumShares(Integer.parseInt(numShares));
+            stock.setSymbol(stockSymbol);
+//            order.setPercentage(Double.parseDouble(orderStockPercentage));
+//            stock.setPrice(Double.parseDouble(pricePerShare));
+            order.setStockName(stockSymbol);
+            order.setOrderType(type);
             order.setDatetime(new Date());
             order.setBuySellType(buySellType);
             order.setNumShares(Integer.parseInt(numShares));
@@ -82,6 +88,13 @@ public class AddOrderController extends HttpServlet {
         else if(type.equals("MarketOnClose"))
 		{
             MarketOnCloseOrder order = new MarketOnCloseOrder();
+//            stock.setPrice(Double.parseDouble(pricePerShare));
+            order.setStockName(stockSymbol);
+            stock.setNumShares(Integer.parseInt(numShares));
+            stock.setSymbol(stockSymbol);
+//            order.setPercentage(Double.parseDouble(orderStockPercentage));
+            order.setStockName(stockSymbol);
+            order.setOrderType(type);
             order.setDatetime(new Date());
             order.setBuySellType(buySellType);
             order.setNumShares(Integer.parseInt(numShares));
@@ -90,6 +103,12 @@ public class AddOrderController extends HttpServlet {
 		else if(type.equals("TrailingStop"))
 		{
             TrailingStopOrder order = new TrailingStopOrder();
+            stock.setNumShares(Integer.parseInt(numShares));
+            stock.setSymbol(stockSymbol);
+            order.setPercentage(Double.parseDouble(orderStockPercentage));
+            order.setStockName(stockSymbol);
+            order.setStockName(stockSymbol);
+            order.setOrderType(type);
             order.setDatetime(new Date());
             order.setPercentage(Double.parseDouble(orderStockPercentage));
             order.setNumShares(Integer.parseInt(numShares));
@@ -99,6 +118,12 @@ public class AddOrderController extends HttpServlet {
 		else if(type.equals("HiddenStop"))
 		{
             HiddenStopOrder order = new HiddenStopOrder();
+            stock.setNumShares(Integer.parseInt(numShares));
+            stock.setSymbol(stockSymbol);
+            order.setPercentage(Double.parseDouble(orderStockPercentage));
+            order.setStockName(stockSymbol);
+            order.setStockName(stockSymbol);
+            order.setOrderType(type);
             order.setDatetime(new Date());
             order.setPricePerShare(Double.parseDouble(pricePerShare));
             order.setNumShares(Integer.parseInt(numShares));
