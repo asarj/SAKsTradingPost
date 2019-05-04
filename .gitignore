@@ -13,6 +13,7 @@ target/
 
 # IntelliJ Idea Files
 .idea
+.settings
 
 # Eclipse Project File
 .project
