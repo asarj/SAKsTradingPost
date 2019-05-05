@@ -105,12 +105,16 @@ public class AddOrderController extends HttpServlet {
             TrailingStopOrder order = new TrailingStopOrder();
             stock.setNumShares(Integer.parseInt(numShares));
             stock.setSymbol(stockSymbol);
-            order.setPercentage(Double.parseDouble(orderStockPercentage));
+            try {
+                order.setPercentage(Integer.parseInt(orderStockPercentage) * 1.0/100);
+            } catch(Exception e){
+                order.setPercentage(1.0);
+            }
             order.setStockName(stockSymbol);
             order.setStockName(stockSymbol);
             order.setOrderType(type);
             order.setDatetime(new Date());
-            order.setPercentage(Double.parseDouble(orderStockPercentage));
+            order.setPercentage(Integer.parseInt(orderStockPercentage));
             order.setNumShares(Integer.parseInt(numShares));
             result = orderDao.submitOrder(order, customer, employee, stock);
 
@@ -120,7 +124,11 @@ public class AddOrderController extends HttpServlet {
             HiddenStopOrder order = new HiddenStopOrder();
             stock.setNumShares(Integer.parseInt(numShares));
             stock.setSymbol(stockSymbol);
-            order.setPercentage(Double.parseDouble(orderStockPercentage));
+            try {
+                order.setPercentage(Integer.parseInt(orderStockPercentage) * 1.0/100);
+            } catch(Exception e){
+                order.setPercentage(1.0);
+            }
             order.setStockName(stockSymbol);
             order.setStockName(stockSymbol);
             order.setOrderType(type);

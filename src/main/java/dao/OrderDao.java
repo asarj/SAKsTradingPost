@@ -6,7 +6,6 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -76,17 +75,26 @@ public class OrderDao {
 
     public String submitOrder(Order order, Customer customer, Employee employee, Stock stock) {
 
-		/*
-		 * Student code to place stock order
-		 * Employee can be null, when the order is placed directly by Customer
+        /*
+         * Student code to place stock order
+         * Employee can be null, when the order is placed directly by Customer
          * */
 
-		/*Sample data begins*/
+        /*Sample data begins*/
         String orderType = null;
         try{ orderType = ((MarketOrder) order).getOrderType(); } catch(Exception e){ }
         try{ orderType = ((MarketOnCloseOrder) order).getOrderType(); } catch(Exception e){ }
+        try{ orderType = ((TrailingStopOrder) order).getOrderType(); } catch(Exception e){ }
+        try{ orderType = ((HiddenStopOrder) order).getOrderType(); } catch(Exception e){ }
+
+        String transId = (int)(Math.random() * 10000) + "";
+        String orderId = (int)(Math.random() * 10000) + "";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        String date = /** dateFormat.format(order.getDatetime()) + **/ "2019-05-06 00:00:00";
+        order.setId(Integer.parseInt(orderId));
 
         if(employee == null){
+            employee = new Employee();
             employee.setEmployeeID("000000000");
             employee.setId("000000000");
             employee.setSsn("000000000");
@@ -95,11 +103,7 @@ public class OrderDao {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
-                String transId = (int)(Math.random() * 10000) + "";
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                String date = /** dateFormat.format(order.getDatetime()) + **/ "2019-05-06 00:00:00";
-                String orderId = (int)(Math.random() * 10000) + "";
-                order.setId(Integer.parseInt(orderId));
+
                 String sql = "select PricePerShare from snisonoff.Stock where StockSymbol = ?";
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setString(1, stock.getSymbol());
@@ -149,35 +153,55 @@ public class OrderDao {
                 return "failure";
             }
         }
-        else if(order.getPercentage() != 0.0){
+        else if(orderType.equals("TrailingStop") || orderType.equals("HiddenStop")){
             // Trailing Stop order
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
-                String sql = "insert into snisonoff.Order values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                String sql = "select PricePerShare from snisonoff.Stock where StockSymbol = ?";
                 PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, stock.getSymbol());
+                ResultSet rs = pst.executeQuery();
+                Double s = 0.0;
+                while(rs.next()){
+                    s = rs.getDouble(1);
+                }
+
+                sql = "insert into snisonoff.Order values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                pst = con.prepareStatement(sql);
                 pst.setInt(1, order.getNumShares());
                 pst.setString(2, stock.getSymbol());
-                pst.setDouble(3, order.getPricePerShare());
-                pst.setInt(4, order.getId());
-                pst.setString(5, order.getDatetime() + " " + Calendar.getInstance().getTime());
+                pst.setDouble(3, s);
+                pst.setInt(4, Integer.parseInt(orderId));
+                pst.setString(5, date);
                 pst.setDouble(6, order.getPercentage());
                 pst.setString(7, orderType);
-                pst.setString(8, order.getOrderType());
+                pst.setString(8, null);
                 pst.setString(9, employee.getEmployeeID().replace("-", ""));
                 pst.executeUpdate();
 
-                sql = "insert into snisonoff.Transaction values (?, ?, ?, ?)";
-
-                sql = "insert into snisonoff.Trade values (?, ?, ?, ?, ?)";
-                pst = con.prepareStatement(sql);
-                pst.setString(1, customer.getClientId().replace("-", ""));
-                pst.setString(2, employee.getEmployeeID().replace("-", ""));
-                pst.setString(3, (int)(Math.random() * 10000) + "");
-                pst.setInt(4, order.getId());
-                pst.setString(5, stock.getSymbol());
-                pst.executeUpdate();
-
+//                if(s == order.getPricePerShare() + (order.getPricePerShare() * order.getPercentage())){
+//                    sql = "insert into snisonoff.Transaction values (?, ?, ?, ?)";
+//                    pst = con.prepareStatement(sql);
+//                    pst.setString(1, transId);
+//                    pst.setDouble(2, (s * 0.05));
+//                    pst.setString(3, date);
+//                    pst.setDouble(4, s);
+//                    pst.executeUpdate();
+//
+//                    sql = "insert into snisonoff.Trade values (?, ?, ?, ?, ?)";
+//                    pst = con.prepareStatement(sql);
+//                    pst.setString(1, customer.getClientId().replace("-", ""));
+//                    pst.setString(2, employee.getEmployeeID().replace("-", ""));
+//                    pst.setString(3, transId);
+//                    pst.setInt(4, order.getId());
+//                    pst.setString(5, stock.getSymbol());
+//                    pst.executeUpdate();
+//                }
+//                else{
+//                    // Let the setStock trigger in the stock?/Order? table handle submission of the Order
+//                }
                 con.close();
                 return "success";
             }
@@ -186,19 +210,16 @@ public class OrderDao {
                 return "failure";
             }
         }
-        else if(order.getPricePerShare() != 0.0){
-            // Hidden Stop order
-        }
         else{
             return "failure";
         }
-        return "failure";
-		/*Sample data ends*/
+
+        /*Sample data ends*/
     }
 
     public List<Order> getOrderByStockSymbol(String stockSymbol) { //TODO test
         /*
-		 * Student code to get orders by stock symbol
+         * Student code to get orders by stock symbol
          */
         List<Order> orders = new ArrayList<Order>();
         try {
@@ -230,14 +251,14 @@ public class OrderDao {
     }
 
     public List<Order> getOrderByCustomerName(String customerName) {  //tested
-         /*
-		 * Student code to get orders by customer name
+        /*
+         * Student code to get orders by customer name
          */
         List<Order> orders = new ArrayList<Order>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
-         //   Statement stmt = con.createStatement();
+            //   Statement stmt = con.createStatement();
 
             String sql = "select C.Id, P.SSN, O.Id, O.NumShares, O.PricePerShare, O.DateTime, O.OrderType \n" +
                     "from snisonoff.Order O, snisonoff.Person P, snisonoff.Client C, snisonoff.Account A, snisonoff.Trade T \n" +
@@ -263,14 +284,14 @@ public class OrderDao {
             System.out.println(e);
             return null;
         }
-         //return getDummyOrders();
+        //return getDummyOrders();
     }
 
     public List<Order> getOrderHistory(String customerId) { //  TODO test
         /*
-		 * The students code to fetch data from the database will be written here
-		 * Show orders for given customerId
-		 */
+         * The students code to fetch data from the database will be written here
+         * Show orders for given customerId
+         */
         List<Order> orders = new ArrayList<Order>();
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -308,36 +329,56 @@ public class OrderDao {
     public List<OrderPriceEntry> getOrderPriceHistory(String orderId) { //TODO finish
 
         /*
-		 * The students code to fetch data from the database will be written here
-		 * Query to view price history of hidden stop order or trailing stop order
-		 * Use setPrice to show hidden-stop price and trailing-stop price
-		 */
+         * The students code to fetch data from the database will be written here
+         * Query to view price history of hidden stop order or trailing stop order
+         * Use setPrice to show hidden-stop price and trailing-stop price
+         */
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             List<OrderPriceEntry> orderPriceHistory = new ArrayList<OrderPriceEntry>();
 
-            String sql = "SELECT O.PriceType FROM snisonoff.Order O WHERE O.Id = ?";
+            String sql = "Select C.Id, C.StockName, C.PricePerShare, (C.PricePerShare - C.PricePerShare * C.Percentage) as TrailingStop, C.DateTime From snisonoff.Order C Where C.OrderType = ? and C.Id = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, orderId);
+            pst.setString(1, "TrailingStop");
+            pst.setString(2, orderId);
             ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                OrderPriceEntry o = new OrderPriceEntry();
+                o.setOrderId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                o.setStockSymbol(rs.getString(2));
+                o.setPricePerShare(rs.getFloat(3));
+                o.setPrice(rs.getFloat(4));
+                o.setDate(rs.getDate(5));
+                orderPriceHistory.add(o);
+            }
+            sql = "Select C.Id, C.StockName, C.PricePerShare, C.DateTime From snisonoff.Order C Where C.OrderType = ?";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, "HiddenStop");
+            pst.setString(2, orderId);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                OrderPriceEntry o = new OrderPriceEntry();
+                o.setOrderId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                o.setStockSymbol(rs.getString(2));
+                o.setPricePerShare(rs.getFloat(3));
+                //o.setPrice(rs.getFloat(4));
+                o.setDate(rs.getDate(4));
+                orderPriceHistory.add(o);
+            }
+            return orderPriceHistory;
 
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+            /*
             for (int i = 0; i < 10; i++) {
                 OrderPriceEntry entry = new OrderPriceEntry();
                 entry.setOrderId(orderId);
                 String priceType = rs.getString(1);
-                if (priceType.equals("TrailingStop")){
-                    //TODO Add query to add to history
-                    break;
-                }
-                // Spencer's old code
-//                char priceType = rs.getString(1);
-//                switch (priceType){
-//                    case "TrailingStop":
-//                        //TODO Add query to add to history
-//                        break;
-//                }
-                // End of Spencer's old code
 
                 //entry.setDate(new Date());
                 //entry.setStockSymbol("aapl");
@@ -349,8 +390,8 @@ public class OrderDao {
         } catch (Exception e){
             System.out.println(e);
             return null;
-        }
+        }*/
 
 
-    }
+
 }
