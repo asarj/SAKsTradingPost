@@ -98,7 +98,7 @@ public class CustomerDao {
                 String sql = "Create View COrder (StockSymbol, StockType, LastName, FirstName, Fee)" +
                         " AS " +
                         "Select S.StockSymbol, S.Type, P.LastName, P.FirstName, T.Fee " +
-                        "From Trade Tr, Stock S, Transaction T, Client N, Person P " +
+                        "From snisonoff.Trade Tr, snisonoff.Stock S, snisonoff.Transaction T, snisonoff.Client N, snisonoff.Person P " +
                         "Where Tr.StockId = S.StockSymbol and T.Id = Tr.TransactionId and N.Id = Tr.AccountId and N.Id = P.SSN";
                 String sql2 = "Create View CRevenue (LastName, FirstName, Revenue) " +
                         "AS " +
@@ -128,28 +128,39 @@ public class CustomerDao {
                 stmt.executeUpdate(sql2);
                 stmt.executeUpdate(sql3);
                 ResultSet rs = stmt.executeQuery(sql4);
+                rs.next();
                 System.out.println(rs.toString());
+                c = new Customer();
                 c.setLastName(rs.getString(1));
                 System.out.println(c.getLastName());
                 c.setFirstName(rs.getString(2));
                 System.out.println(c.getFirstName());
-                ResultSet rt = stmt.executeQuery("select C.Id, P.FirstName, P.LastName, P.Address, L.City, L.State, L.Zipcode, P.Telephone, C.Email, C.CreditCardNumber, C.Rating from Client C, Person P, Location L where C.Id = P.SSN and P.Zipcode = L.Zipcode");
-                while(rt.next()){
-                    c.setClientId(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-                    c.setSsn(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-                    c.setId(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-                    c.setFirstName(rt.getString(2));
-                    c.setLastName(rt.getString(3));
-                    c.setAddress(rt.getString(4));
+                stmt.close();
+//                rs.close();
+
+                sql = "select C.Id, P.FirstName, P.LastName, P.Address, L.City, L.State, L.Zipcode, P.Telephone, C.Email, C.CreditCardNumber, C.Rating from Client C, Person P, Location L where C.Id = P.SSN and P.Zipcode = L.Zipcode and P.FirstName = ? and P.LastName = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, c.getFirstName());
+                pst.setString(2, c.getLastName());
+                rs = pst.executeQuery();
+
+                while(rs.next()){
+                    c.setClientId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                    c.setSsn(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                    c.setId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                    c.setFirstName(rs.getString(2));
+                    c.setLastName(rs.getString(3));
+                    c.setAddress(rs.getString(4));
                     Location l = new Location();
-                    l.setCity(rt.getString(5));
-                    l.setState(rt.getString(6));
-                    l.setZipCode(rt.getInt(7));
+                    l.setCity(rs.getString(5));
+                    l.setState(rs.getString(6));
+                    l.setZipCode(rs.getInt(7));
                     c.setLocation(l);
-                    c.setTelephone(rt.getString(8));
-                    c.setEmail(rt.getString(9));
-                    c.setCreditCard(rt.getString(10));
-                    c.setRating(rt.getInt(11));
+                    c.setTelephone(rs.getString(8));
+                    c.setEmail(rs.getString(9));
+                    c.setCreditCard(rs.getString(10));
+                    c.setRating(rs.getInt(11));
+                    return c;
                 }
                 con.close();
                 return c;
@@ -497,7 +508,7 @@ public class CustomerDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select P.SSN, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, C.Email, C.CreditCardNumber, C.Rating " +
+            ResultSet rs = stmt.executeQuery("select P.SSN, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, C.Email, C.CreditCardNumber, C.Rating, P.Telephone " +
                     "from snisonoff.Client C, snisonoff.Location L, snisonoff.Person P " +
                     "where c.Id = P.SSN and P.Zipcode = L.Zipcode");
             while(rs.next()){
@@ -514,8 +525,9 @@ public class CustomerDao {
                 l.setState(rs.getString(7));
                 c.setLocation(l);
                 c.setEmail(rs.getString(8));
-                c.setCreditCard(rs.getString(9));
+                c.setCreditCard(rs.getString(9).replace("-", ""));
                 c.setRating(rs.getInt(10));
+                c.setTelephone(rs.getString(11));
                 customers.add(c);
             }
             con.close();

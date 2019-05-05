@@ -73,7 +73,7 @@ public class OrderDao {
         return orders;
     }
 
-    public String submitOrder(Order order, Customer customer, Employee employee, Stock stock) {
+    public String submitOrder(Order order, Customer customer, Employee employee, Stock stock) {     // TESTING: DONE
 
         /*
          * Student code to place stock order
@@ -92,6 +92,26 @@ public class OrderDao {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
         String date = /** dateFormat.format(order.getDatetime()) + **/ "2019-05-06 00:00:00";
         order.setId(Integer.parseInt(orderId));
+
+//DUMMY CODE
+        if(customer == null){
+            Location location = new Location();
+            location.setZipCode(11790);
+            location.setCity("Stony Brook");
+            location.setState("NY");
+            customer = new Customer();
+            customer.setId("111-11-1111");
+            customer.setAddress("123 Success Street");
+            customer.setLastName("Lu");
+            customer.setFirstName("Shiyong");
+            customer.setEmail("shiyong@cs.sunysb.edu");
+            customer.setLocation(location);
+            customer.setTelephone("5166328959");
+            customer.setCreditCard("1234567812345678");
+            customer.setRating(1);
+        }
+
+        // ---
 
         if(employee == null){
             employee = new Employee();
@@ -112,20 +132,21 @@ public class OrderDao {
                 while(rs.next()){
                     s = rs.getString(1);
                 }
-                sql = "insert into snisonoff.Order values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                sql = "insert into snisonoff.Order values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 pst = con.prepareStatement(sql);
                 pst.setInt(1, order.getNumShares());
                 pst.setString(2, stock.getSymbol());
                 pst.setDouble(3, Double.parseDouble(s));
                 pst.setInt(4, Integer.parseInt(orderId));
                 pst.setString(5, date);
-                pst.setDouble(6, order.getPercentage());
+                pst.setDouble(6, 0.0);
                 pst.setString(7, orderType);
                 if(orderType.equals("Market"))
                     pst.setString(8, ((MarketOrder) order).getBuySellType());
                 else
                     pst.setString(8, ((MarketOnCloseOrder) order).getBuySellType());
-                pst.setString(9, employee.getEmployeeID().replace("-", ""));
+                pst.setString(9, customer.getClientId().replace("-", ""));
+                pst.setString(10, employee.getEmployeeID().replace("-", ""));
                 pst.executeUpdate();
 
                 sql = "insert into snisonoff.Transaction values (?, ?, ?, ?)";
@@ -153,7 +174,8 @@ public class OrderDao {
                 return "failure";
             }
         }
-        else if(orderType.equals("TrailingStop") || orderType.equals("HiddenStop")){
+        else
+            if(orderType.equals("TrailingStop") || orderType.equals("HiddenStop")){
             // Trailing Stop order
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -168,7 +190,7 @@ public class OrderDao {
                     s = rs.getDouble(1);
                 }
 
-                sql = "insert into snisonoff.Order values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                sql = "insert into snisonoff.Order values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 pst = con.prepareStatement(sql);
                 pst.setInt(1, order.getNumShares());
                 pst.setString(2, stock.getSymbol());
@@ -178,7 +200,8 @@ public class OrderDao {
                 pst.setDouble(6, order.getPercentage());
                 pst.setString(7, orderType);
                 pst.setString(8, null);
-                pst.setString(9, employee.getEmployeeID().replace("-", ""));
+                pst.setString(9, customer.getClientId().replace("-", ""));
+                pst.setString(10, employee.getEmployeeID().replace("-", ""));
                 pst.executeUpdate();
 
 //                if(s == order.getPricePerShare() + (order.getPricePerShare() * order.getPercentage())){
@@ -217,7 +240,7 @@ public class OrderDao {
         /*Sample data ends*/
     }
 
-    public List<Order> getOrderByStockSymbol(String stockSymbol) { //TODO test
+    public List<Order> getOrderByStockSymbol(String stockSymbol) {      // TESTING: ALMOST DONE DETAILS COLUMN DOES NOT DISPLAY PROPERLY
         /*
          * Student code to get orders by stock symbol
          */
@@ -227,18 +250,87 @@ public class OrderDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             Statement stmt = con.createStatement();
 
-            String sql = "select O.Id, O.NumShares, O.PricePerShare, O.DateTime, O.OrderType from snisonoff.Order O where O.StockName = ?";
+            String sql = "select O.Id, O.NumShares, O.PricePerShare, O.DateTime, O.PriceType from snisonoff.Order O where O.StockName = ? order by O.Id ASC";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, stockSymbol);
             ResultSet rs = pst.executeQuery();
+            int curr = 0;
             while(rs.next()){
-                Order o = new Order();
-                o.setId(rs.getInt(1));
-                o.setNumShares(rs.getInt(2));
-                o.setPricePerShare(rs.getFloat(3));
-                o.setDatetime(rs.getDate(4));
-                o.setOrderType(rs.getString(5));
-                orders.add(o);
+                int ind = rs.getInt(1);
+                if(ind > curr){
+                    curr = ind;
+                }
+                else{
+                    continue;
+                }
+                String type = rs.getString(5);
+                if(type.equals("Market")){
+                    try{
+                        MarketOrder o = new MarketOrder();
+                        o.setId(rs.getInt(1));
+                        o.setNumShares(rs.getInt(2));
+                        o.setPricePerShare(rs.getFloat(3));
+                        o.setDatetime(rs.getDate(4));
+                        o.setPriceType(rs.getString(5));
+
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                else if(type.equals("MarketOnClose")){
+                    try{
+                        MarketOnCloseOrder o = new MarketOnCloseOrder();
+                        o.setId(rs.getInt(1));
+                        o.setNumShares(rs.getInt(2));
+                        o.setPricePerShare(rs.getFloat(3));
+                        o.setDatetime(rs.getDate(4));
+                        o.setPriceType(rs.getString(5));
+
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                else if(type.equals("TrailingStop")){
+                    try{
+                        TrailingStopOrder o = new TrailingStopOrder();
+                        o.setId(rs.getInt(1));
+                        o.setNumShares(rs.getInt(2));
+                        o.setPricePerShare(rs.getFloat(3));
+                        o.setDatetime(rs.getDate(4));
+                        o.setPriceType(rs.getString(5));
+
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                else{
+                    try{
+                        HiddenStopOrder o = new HiddenStopOrder();
+                        o.setId(rs.getInt(1));
+                        o.setNumShares(rs.getInt(2));
+                        o.setPricePerShare(rs.getFloat(3));
+                        o.setDatetime(rs.getDate(4));
+                        o.setPriceType(rs.getString(5));
+
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+//                o.setId(rs.getInt(1));
+//                o.setNumShares(rs.getInt(2));
+//                o.setPricePerShare(rs.getFloat(3));
+//                o.setDatetime(rs.getDate(4));
+//                o.setPriceType(rs.getString(5));
+//
+//                orders.add(o);
             }
             con.close();
             return orders;
@@ -250,7 +342,7 @@ public class OrderDao {
 
     }
 
-    public List<Order> getOrderByCustomerName(String customerName) {  //tested
+    public List<Order> getOrderByCustomerName(String customerName) {    // TESTING: ALMOST DONE DETAILS COLUMN DOES NOT DISPLAY PROPERLY
         /*
          * Student code to get orders by customer name
          */
@@ -260,23 +352,91 @@ public class OrderDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             //   Statement stmt = con.createStatement();
 
-            String sql = "select C.Id, P.SSN, O.Id, O.NumShares, O.PricePerShare, O.DateTime, O.OrderType \n" +
+            String sql = "select C.Id, P.SSN, O.Id, O.NumShares, O.PricePerShare, O.DateTime, O.PriceType \n" +
                     "from snisonoff.Order O, snisonoff.Person P, snisonoff.Client C, snisonoff.Account A, snisonoff.Trade T \n" +
-                    "where O.Id = T.OrderId and T.AccountId= A.Id and C.Id = P.SSN and P.LastName = ? and P.FirstName = ?";
+                    "where O.Id = T.OrderId and T.AccountId= A.Id and C.Id = P.SSN and P.LastName = ? and P.FirstName = ? order by O.Id ASC";
             PreparedStatement pst = con.prepareStatement(sql);
             // Assumes customerName has a first and last name
             pst.setString(1, customerName.substring(customerName.indexOf(" ") + 1));
             pst.setString(2, customerName.substring(0, customerName.indexOf(" ")));
             ResultSet rs = pst.executeQuery();
+            int curr = 0;
             while (rs.next()) {
-                Order o = new Order();
-                o.setClient(rs.getInt(1));
-                o.setId(rs.getInt(3));
-                o.setNumShares(rs.getInt(4));
-                o.setPricePerShare(rs.getDouble(5));
-                o.setDatetime(rs.getDate(6));
-                o.setOrderType(rs.getString(7));
-                orders.add(o);
+                int ind = rs.getInt(3);
+                if (ind > curr){
+                    curr = ind;
+                }
+                else{
+                    continue;
+                }
+                String type = rs.getString(7);
+                if(type.equals("Market")){
+                    try{
+                        MarketOrder o = new MarketOrder();
+                        o.setClient(rs.getInt(1));
+                        o.setId(rs.getInt(3));
+                        o.setNumShares(rs.getInt(4));
+                        o.setPricePerShare(rs.getDouble(5));
+                        o.setDatetime(rs.getDate(6));
+                        o.setOrderType(rs.getString(7));
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                else if(type.equals("MarketOnClose")){
+                    try{
+                        MarketOnCloseOrder o = new MarketOnCloseOrder();
+                        o.setClient(rs.getInt(1));
+                        o.setId(rs.getInt(3));
+                        o.setNumShares(rs.getInt(4));
+                        o.setPricePerShare(rs.getDouble(5));
+                        o.setDatetime(rs.getDate(6));
+                        o.setOrderType(rs.getString(7));
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                else if(type.equals("TrailingStop")){
+                    try{
+                        TrailingStopOrder o = new TrailingStopOrder();
+                        o.setClient(rs.getInt(1));
+                        o.setId(rs.getInt(3));
+                        o.setNumShares(rs.getInt(4));
+                        o.setPricePerShare(rs.getDouble(5));
+                        o.setDatetime(rs.getDate(6));
+                        o.setOrderType(rs.getString(7));
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+                else{
+                    try{
+                        HiddenStopOrder o = new HiddenStopOrder();
+                        o.setClient(rs.getInt(1));
+                        o.setId(rs.getInt(3));
+                        o.setNumShares(rs.getInt(4));
+                        o.setPricePerShare(rs.getDouble(5));
+                        o.setDatetime(rs.getDate(6));
+                        o.setOrderType(rs.getString(7));
+                        orders.add(o);
+                    }
+                    catch(Exception e){
+
+                    }
+                }
+//                o.setClient(rs.getInt(1));
+//                o.setId(rs.getInt(3));
+//                o.setNumShares(rs.getInt(4));
+//                o.setPricePerShare(rs.getDouble(5));
+//                o.setDatetime(rs.getDate(6));
+//                o.setOrderType(rs.getString(7));
+//                orders.add(o);
             }
             con.close();
             return orders;
@@ -287,7 +447,7 @@ public class OrderDao {
         //return getDummyOrders();
     }
 
-    public List<Order> getOrderHistory(String customerId) { //  TODO test
+    public List<Order> getOrderHistory(String customerId) {     // TESTING: DONE
         /*
          * The students code to fetch data from the database will be written here
          * Show orders for given customerId
@@ -298,21 +458,68 @@ public class OrderDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             //   Statement stmt = con.createStatement();
 
-            String sql = "SELECT P.SSN, P.LastName, P.FirstName, C.Id, A.Id, O.Id, O.StockName, O.DateTime, T.DateTime\n" +
-                    "FROM snisonoff.Person P, snisonoff.Client C, snisonoff.Account A, snisonoff.Order O, snisonoff.Trade Tr, snisonoff.Transaction T\n" +
-                    "WHERE P.SSN = C.Id and C.Id = A.Id and A.Id = Tr.AccountId and Tr.OrderId = O.Id and Tr.TransactionId = T.Id and O.Id = ?";
+            String sql = "SELECT DISTINCT P.SSN, P.LastName, P.FirstName, C.Id, A.Id, O.Id, O.StockName, O.DateTime, T.DateTime, O.PriceType, O.NumShares " +
+                    "FROM snisonoff.Person P, snisonoff.Client C, snisonoff.Account A, snisonoff.Order O, snisonoff.Trade Tr, snisonoff.Transaction T " +
+                    "WHERE P.SSN = C.Id and C.Id = A.Id and A.Id = Tr.AccountId and Tr.OrderId = O.Id and Tr.TransactionId = T.Id and C.Id = ? " +
+                    "ORDER BY O.Id ASC";
             // Added and O.Id = ?
             PreparedStatement pst = con.prepareStatement(sql);
             // Assumes customerName has a first and last name
             pst.setString(1, customerId);
             ResultSet rs = pst.executeQuery();
+            int curr = 0;
             while (rs.next()) {
-                Order o = new Order();
-                o.setClient(rs.getInt(4));
-                o.setId(rs.getInt(6));
-                o.setStockName(rs.getString(7));
-                o.setDatetime(rs.getDate(8));
-                orders.add(o);
+                int ind = rs.getInt(6);
+                if (ind > curr){
+                    curr = ind;
+                }
+                else{
+                    continue;
+                }
+                String type = rs.getString(10);
+                if(type.equals("Market")){
+                    MarketOrder o = new MarketOrder();
+                    o.setClient(rs.getInt(4));
+                    o.setId(rs.getInt(6));
+                    o.setStockName(rs.getString(7));
+                    o.setDatetime(rs.getDate(8));
+                    o.setPriceType(rs.getString(10));
+                    o.setNumShares(rs.getInt(11));
+                    orders.add(o);
+                }
+                else if(type.equals("MarketOnClose")){
+                    MarketOnCloseOrder o = new MarketOnCloseOrder();
+                    o.setClient(rs.getInt(4));
+                    o.setId(rs.getInt(6));
+                    o.setStockName(rs.getString(7));
+                    o.setDatetime(rs.getDate(8));
+                    o.setPriceType(rs.getString(10));
+                    o.setNumShares(rs.getInt(11));
+                    orders.add(o);
+                }
+                else if(type.equals("TrailingStop")){
+                    TrailingStopOrder o = new TrailingStopOrder();
+                    o.setClient(rs.getInt(4));
+                    o.setId(rs.getInt(6));
+                    o.setStockName(rs.getString(7));
+                    o.setDatetime(rs.getDate(8));
+                    o.setPriceType(rs.getString(10));
+                    o.setNumShares(rs.getInt(11));
+                    orders.add(o);
+                }
+                else if (type.equals("HiddenStop")){
+                    HiddenStopOrder o = new HiddenStopOrder();
+                    o.setClient(rs.getInt(4));
+                    o.setId(rs.getInt(6));
+                    o.setStockName(rs.getString(7));
+                    o.setDatetime(rs.getDate(8));
+                    o.setPriceType(rs.getString(10));
+                    o.setNumShares(rs.getInt(11));
+                    orders.add(o);
+                }
+                else{
+
+                }
             }
             con.close();
             return orders;
@@ -326,7 +533,7 @@ public class OrderDao {
     }
 
 
-    public List<OrderPriceEntry> getOrderPriceHistory(String orderId) { //TODO finish
+    public List<OrderPriceEntry> getOrderPriceHistory(String orderId) {     // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -338,32 +545,40 @@ public class OrderDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             List<OrderPriceEntry> orderPriceHistory = new ArrayList<OrderPriceEntry>();
 
-            String sql = "Select C.Id, C.StockName, C.PricePerShare, (C.PricePerShare - C.PricePerShare * C.Percentage) as TrailingStop, C.DateTime From snisonoff.Order C Where C.OrderType = ? and C.Id = ?";
+            String sql = "Select C.Id, C.StockName, C.PricePerShare, (C.PricePerShare - C.PricePerShare * C.Percentage) as TrailingStop, C.DateTime From snisonoff.Order C Where C.PriceType = ? and C.Id = ? ORDER BY C.Id ASC";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, "TrailingStop");
             pst.setString(2, orderId);
             ResultSet rs = pst.executeQuery();
+            int curr = 0;
             while (rs.next()) {
+                int ind = rs.getInt(1);
+                if(ind > curr){
+                    curr = ind;
+                }
+                else{
+                    continue;
+                }
                 OrderPriceEntry o = new OrderPriceEntry();
-                o.setOrderId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+                o.setOrderId(rs.getString(1));
                 o.setStockSymbol(rs.getString(2));
                 o.setPricePerShare(rs.getFloat(3));
                 o.setPrice(rs.getFloat(4));
                 o.setDate(rs.getDate(5));
                 orderPriceHistory.add(o);
             }
-            sql = "Select C.Id, C.StockName, C.PricePerShare, C.DateTime From snisonoff.Order C Where C.OrderType = ?";
+            sql = "Select C.Id, C.StockName, C.PricePerShare, (C.PricePerShare - C.PricePerShare * C.Percentage) as TrailingStop, C.DateTime From snisonoff.Order C Where C.PriceType = ? and C.Id = ? ORDER BY C.Id ASC";
             pst = con.prepareStatement(sql);
             pst.setString(1, "HiddenStop");
             pst.setString(2, orderId);
-            rs = pst.executeQuery();
-            while (rs.next()) {
+            ResultSet rst = pst.executeQuery();
+            while (rst.next()) {
                 OrderPriceEntry o = new OrderPriceEntry();
-                o.setOrderId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-                o.setStockSymbol(rs.getString(2));
-                o.setPricePerShare(rs.getFloat(3));
-                //o.setPrice(rs.getFloat(4));
-                o.setDate(rs.getDate(4));
+                o.setOrderId(rst.getString(1));
+                o.setStockSymbol(rst.getString(2));
+                o.setPricePerShare(rst.getFloat(3));
+                o.setPrice(rst.getFloat(4));
+                o.setDate(rst.getDate(5));
                 orderPriceHistory.add(o);
             }
             return orderPriceHistory;

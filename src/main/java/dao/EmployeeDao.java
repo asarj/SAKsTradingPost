@@ -295,7 +295,7 @@ public class EmployeeDao {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select E.SSN, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, P.Email, E.StartDate, E.HourlyRate " +
+			ResultSet rs = stmt.executeQuery("select E.SSN, P.LastName, P.FirstName, P.Address, L.Zipcode, L.City, L.State, P.Email, E.StartDate, E.HourlyRate, P.Telephone " +
 					"from snisonoff.Employee E, snisonoff.Location L, snisonoff.Person P " +
 					"where E.SSN = P.SSN and P.Zipcode = L.Zipcode");
 			while(rs.next()){
@@ -315,6 +315,7 @@ public class EmployeeDao {
 				c.setEmail(rs.getString(8));
 				c.setStartDate(rs.getString(9));
 				c.setHourlyRate(rs.getInt(10));
+				c.setTelephone(rs.getString(11));
 				employees.add(c);
 			}
 			con.close();
@@ -425,27 +426,23 @@ public class EmployeeDao {
 					}
 				}
 			} finally {
-				String sql5 = "Create View EmployeeName (Id, SSN, LastName, FirstName) " +
-						"AS " +
+				String sql5 = "Create View EmployeeName (Id, SSN, LastName, FirstName) AS " +
 						"Select E.Id, P.SSN, P.LastName, P.FirstName " +
 						"From Employee E, Person P " +
 						"Where E.SSN = P.SSN";
-				String sql = "Create View COrder (StockSymbol, StockType, LastName, FirstName, Fee)" +
-						" AS " +
-						"Select S.StockSymbol, S.Type, P.LastName, P.FirstName, T.Fee " +
-						"From Trade Tr, Stock S, Transaction T, Client N, Person P " +
-						"Where Tr.StockId = S.StockSymbol and T.Id = Tr.TransactionId and N.Id = Tr.AccountId and N.Id = P.SSN";
-				String sql2 = "Create View CRevenue (LastName, FirstName, Revenue) " +
-						"AS " +
+				String sql = "Create View CROrder (StockSymbol, StockType, LastName, FirstName, EmployeeId, Fee) AS " +
+						"Select S.StockSymbol, S.Type, N.LastName, N.FirstName, N.Id, T.Fee " +
+						"From Trade Tr, Stock S, Transaction T, EmployeeName N " +
+						"Where Tr.StockId = S.StockSymbol and T.Id = Tr.TransactionId and N.Id = Tr.BrokerID";
+				String sql2 = "Create View CRRevenue (LastName, FirstName, Revenue) AS " +
 						"Select LastName, FirstName, SUM(Fee) " +
-						"From COrder " +
-						"GROUP BY LastName, FirstName ";
-				String sql3 = "Create View HighestRevenue (MaxRevenue) " +
-						"AS " +
+						"From CROrder " +
+						"GROUP BY LastName, FirstName";
+				String sql3 = "Create View HighestRevenue (MaxRevenue) AS " +
 						"Select MAX(Revenue) " +
-						"From CRevenue ";
+						"From CRRevenue";
 				String sql4 = "Select LastName, FirstName " +
-						"From CRevenue "
+						"From CRRevenue "
 //                        + "Where Revenue >= HighestRevenue"
 						;
 //            PreparedStatement pst = con.prepareStatement(sql);
@@ -464,28 +461,37 @@ public class EmployeeDao {
 				stmt.executeUpdate(sql2);
 				stmt.executeUpdate(sql3);
 				ResultSet rs = stmt.executeQuery(sql4);
+				rs.next();
 				System.out.println(rs.toString());
+				c = new Employee();
 				c.setLastName(rs.getString(1));
 				System.out.println(c.getLastName());
 				c.setFirstName(rs.getString(2));
 				System.out.println(c.getFirstName());
-				ResultSet rt = stmt.executeQuery("select E.SSN, P.FirstName, P.LastName, P.Address, L.City, L.State, L.Zipcode, P.Telephone, P.Email, E.StartDate, E.HourlyRate from Employee E, Person P, Location L where E.SSN = P.SSN and P.Zipcode = L.Zipcode");
-				while(rt.next()){
-					c.setEmployeeID(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-					c.setSsn(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-					c.setId(rt.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
-					c.setFirstName(rt.getString(2));
-					c.setLastName(rt.getString(3));
-					c.setAddress(rt.getString(4));
+				stmt.close();
+
+				sql = "select E.SSN, P.FirstName, P.LastName, P.Address, L.City, L.State, L.Zipcode, P.Telephone, P.Email, E.StartDate, E.HourlyRate from Employee E, Person P, Location L where E.SSN = P.SSN and P.Zipcode = L.Zipcode and P.FirstName = ? and P.LastName = ?";
+				PreparedStatement pst = con.prepareStatement(sql);
+				pst.setString(1, c.getFirstName());
+				pst.setString(2, c.getLastName());
+				rs = pst.executeQuery();
+				while(rs.next()){
+					c.setEmployeeID(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+					c.setSsn(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+					c.setId(rs.getString(1).substring(0, 3) + "-" + rs.getString(1).substring(3, 5) + "-" + rs.getString(1).substring(5));
+					c.setFirstName(rs.getString(2));
+					c.setLastName(rs.getString(3));
+					c.setAddress(rs.getString(4));
 					Location l = new Location();
-					l.setCity(rt.getString(5));
-					l.setState(rt.getString(6));
-					l.setZipCode(rt.getInt(7));
+					l.setCity(rs.getString(5));
+					l.setState(rs.getString(6));
+					l.setZipCode(rs.getInt(7));
 					c.setLocation(l);
-					c.setTelephone(rt.getString(8));
-					c.setEmail(rt.getString(9));
-					c.setStartDate(rt.getString(10));
-					c.setHourlyRate(rt.getFloat(11));
+					c.setTelephone(rs.getString(8));
+					c.setEmail(rs.getString(9));
+					c.setStartDate(rs.getString(10));
+					c.setHourlyRate(rs.getFloat(11));
+					return c;
 				}
 				con.close();
 				return c;

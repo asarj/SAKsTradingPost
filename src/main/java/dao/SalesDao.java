@@ -28,7 +28,7 @@ public class SalesDao {
 
         return items;
     }
-    public List<RevenueItem> getSalesReport(String month, String year) { //tested
+    public List<RevenueItem> getSalesReport(String month, String year) {    // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -120,7 +120,7 @@ public class SalesDao {
 
 
 
-    public List<RevenueItem> getSummaryListing(String searchKeyword) { //Tested
+    public List<RevenueItem> getSummaryListing(String searchKeyword) {  // TESTING: PARTIALLY DONE NEEDS WORK ON NAMES, TYPES
 
         /*
          * The students code to fetch data from the database will be written here
@@ -134,12 +134,18 @@ public class SalesDao {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
-            //   Statement stmt = con.createStatement();
-
+            Statement stmt = con.createStatement();
+            try{
+                stmt.executeUpdate("DROP VIEW Name");
+            }catch(SQLException e){
+                System.out.println("cannot drop view namw");
+            }
+            stmt.close();
             String sql = "Create View Name (Id, AccountId, SSN, LastName, FirstName, NumShares) AS Select C.Id, A.Id, P.SSN, P.LastName, P.FirstName, A.NumShares From snisonoff.Account A, snisonoff.Client C, snisonoff.Person P Where A.Client = C.Id and C.Id = P.SSN";
-            con.prepareStatement(sql);
-            sql = "Select T.DateTime, N.AccountId, S.StockSymbol, N.NumShares, S.PricePerShare, T.Fee From snisonoff.Stock S, snisonoff.Trade Tr, snisonoff.Transaction T, Name N, snisonoff.Order O Where S.StockSymbol = O.StockName and T.Id = Tr.TransactionId and O.Id = Tr.OrderId and Tr.AccountId = N.AccountId and S.StockSymbol = ?";
             PreparedStatement pst = con.prepareStatement(sql);
+            pst.executeUpdate();
+            sql = "Select T.DateTime, N.AccountId, S.StockSymbol, N.NumShares, S.PricePerShare, T.Fee From snisonoff.Stock S, snisonoff.Trade Tr, snisonoff.Transaction T, Name N, snisonoff.Order O Where S.StockSymbol = O.StockName and T.Id = Tr.TransactionId and O.Id = Tr.OrderId and Tr.AccountId = N.AccountId and (S.StockSymbol = ?)";
+            pst = con.prepareStatement(sql);
             pst.setString(1, searchKeyword);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -151,6 +157,9 @@ public class SalesDao {
                 r.setPricePerShare(rs.getFloat(5));
                 r.setAmount(rs.getDouble(6));
                 items.add(r);
+            }
+            if(items.size() != 0){
+                return items;
             }
 
             sql = "Select T.DateTime, N.AccountId, S.StockSymbol, N.NumShares, S.PricePerShare, T.Fee From snisonoff.Stock S, snisonoff.Trade Tr, snisonoff.Transaction T, Name N, snisonoff.Order O Where S.StockSymbol = O.StockName and T.Id = Tr.TransactionId and O.Id = Tr.OrderId and Tr.AccountId = N.AccountId and S.Type = ?";
@@ -167,6 +176,9 @@ public class SalesDao {
                 r.setAmount(rs.getDouble(6));
                 items.add(r);
             }
+            if(items.size() != 0){
+                return items;
+            }
 
             sql = "Select T.DateTime, N.AccountId, S.StockSymbol, N.NumShares, S.PricePerShare, T.Fee From snisonoff.Stock S, snisonoff.Trade Tr, snisonoff.Transaction T, Name N, snisonoff.Order O Where S.StockSymbol = O.StockName and T.Id = Tr.TransactionId and O.Id = Tr.OrderId and Tr.AccountId = N.AccountId and N.SSN = ?";
             pst = con.prepareStatement(sql);
@@ -181,6 +193,9 @@ public class SalesDao {
                 r.setPricePerShare(rs.getFloat(5));
                 r.setAmount(rs.getDouble(6));
                 items.add(r);
+            }
+            if(items.size() != 0){
+                return items;
             }
 
             con.close();

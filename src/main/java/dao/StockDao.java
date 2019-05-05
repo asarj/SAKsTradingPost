@@ -8,6 +8,8 @@ import java.util.List;
 import model.Customer;
 import model.Location;
 import model.Stock;
+import java.util.Date;
+import java.sql.Timestamp;
 
 public class StockDao {
 
@@ -58,7 +60,7 @@ public class StockDao {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  1
     // done, but needs testing: needs fixing
-    public List<Stock> getActivelyTradedStocks() {
+    public List<Stock> getActivelyTradedStocks() {  // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -86,15 +88,15 @@ public class StockDao {
             }
 
 
-            String s1 = "Create View StockTraded (StockSymbol, StockName, StockType, TransactionId) " +
+            String s1 = "Create View StockTraded (StockSymbol, StockName, StockType, TransactionId, PricePerShare ) " +
                     "AS " +
-                    "Select S.StockSymbol, S.CompanyName, S.Type, Tr.TransactionId " +
+                    "Select S.StockSymbol, S.CompanyName, S.Type, Tr.TransactionId, S.PricePerShare " +
                     "From snisonoff.Order O, snisonoff.Trade Tr, snisonoff.Stock S " +
                     "Where O.StockName = S.StockSymbol and O.Id = Tr.OrderId; ";
 
-            String s1_5 = "Create View TradedTimes (StockSymbol, StockName, StockType, Times) " +
+            String s1_5 = "Create View TradedTimes (StockSymbol, StockName, StockType, Times, PricePerShare) " +
                     "AS " +
-                    "Select StockSymbol, StockName, StockType, COUNT(StockSymbol) " +
+                    "Select StockSymbol, StockName, StockType, COUNT(StockSymbol), PricePerShare " +
                     "From StockTraded " +
                     "Group By StockSymbol; ";
 
@@ -107,7 +109,6 @@ public class StockDao {
             stmt.executeUpdate(s1);
             stmt.executeUpdate(s1_5);
             ResultSet rs = stmt.executeQuery(s2);
-//            stmt.executeUpdate(q3);
 
             while(rs.next()){
                 Stock s = new Stock();
@@ -115,6 +116,7 @@ public class StockDao {
                 s.setName(rs.getString(2));
                 s.setType(rs.getString(3));
                 s.setNumShares(rs.getInt(4));
+                s.setPrice(rs.getDouble(5));
                 stocks.add(s);
             }
         } catch (Exception e){
@@ -126,7 +128,7 @@ public class StockDao {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  2
     // Working!
-    public List<Stock> getAllStocks() {
+    public List<Stock> getAllStocks() {     // TESTING: DONE
         /*
          * The students code to fetch data from the database will be written here
          * Return list of stocks
@@ -156,9 +158,7 @@ public class StockDao {
         return stocks;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  3
-    // done, but needs testing (not sure, check after stock history)
-    public Stock getStockBySymbol(String stockSymbol)
-    {
+    public Stock getStockBySymbol(String stockSymbol) {     // TESTING: DONE
         /*
          * The students code to fetch data from the database will be written here
          * Return stock matching symbol
@@ -191,8 +191,7 @@ public class StockDao {
 
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  4
-    // Working, but taking in only int
-    public String setStockPrice(String stockSymbol, double stockPrice) {
+    public String setStockPrice(String stockSymbol, double stockPrice) {    // COME BACK AFTER SUBMITORDER() IS FINISHED
         /*
          * The student's code to fetch data from the database will be written here
          * Perform price update of the stock symbol
@@ -202,7 +201,90 @@ public class StockDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
             Statement stmt = con.createStatement();
+            Date date = new Date();
+            long time = date.getTime();
+            System.out.println("Time in Milliseconds: " + time);
+            Timestamp ts = new Timestamp(time);
+            System.out.println("Current Time Stamp: " + ts);
+            // -- GET OLD STOCK PRICE
+            double oldPricePerShare = 0.0 ;
+            ResultSet rs1 = stmt.executeQuery("SELECT O.PricePerShare FROM snisonoff.Order O WHERE O.StockName = '" + stockSymbol + "'");
+            System.out.println("1");
+            while(rs1.next()){
+                oldPricePerShare = (rs1.getDouble(1));
+            }
+            // -- UPDATING STOCK PRICE
             int rs = stmt.executeUpdate("Update Stock Set PricePerShare = '" + stockPrice + "' Where StockSymbol = '" + stockSymbol + "'");
+            System.out.println("2");
+            // -- INSERT NEW STOCK PRICE INTO STOCK PRICE HISTORY
+            String s2= "insert into snisonoff.StockPriceHistory values ('"+ stockSymbol +"', '"+ stockPrice + "', '" + ts +"')";
+            stmt.executeUpdate(s2);
+            System.out.println("3");
+            // CHECKING IF NEW STOCK PRICE WILL CAUSE NEW SELL TRANSACTIONS & TRADES
+            ResultSet rs3 = stmt.executeQuery("SELECT O.* FROM snisonoff.Order O, Stock S " +
+                    "WHERE ((S.PricePerShare - O.PricePerShare) < 0) AND ((O.PricePerShare - S.PricePerShare)/O.PricePerShare > O.Percentage) " +
+                    "AND O.StockName = '" + stockSymbol + "' " +
+                    "AND O.StockName = S.StockSymbol " +
+                    "AND (O.PriceType = 'TrailingStop' OR O.PriceType = 'HiddenStop')");
+
+            List<String> transactions = new ArrayList<String>();
+            List<String> trades = new ArrayList<String>();
+            List<String> updates = new ArrayList<String>();
+
+            System.out.println("4");
+            //transaction
+            int transId = 0000000;
+            double transFee = 1.0;
+            double transStockPrice = 0.0;
+            //trades
+            int tradeAccountId = 5;
+            int tradeEmployee = 8;
+            int tradeOrderId = 9;
+            String tradeOrderIdStr = 9 + "";
+            String tradeStockId = "";
+
+            //
+            System.out.println("4.1");
+            boolean foundOrder = false;
+            while(rs3.next()) {
+                foundOrder = true;
+                //Create New Transaction
+                transId = (int) (Math.random() * 10000) ;
+                transFee = (rs3.getDouble(3)) * 0.05;
+                System.out.println("4.2");
+                transStockPrice = rs3.getDouble(3);
+                String newTransaction = "insert into snisonoff.Transaction values (" + transId + ", " + transFee + ", '" + ts + "', " + transStockPrice + ")";
+                transactions.add(newTransaction);
+                //Create New Trade
+                tradeAccountId = rs3.getInt(9);
+                tradeEmployee = rs3.getInt(10);
+                System.out.println("4.3");
+                tradeOrderId = rs3.getInt(4);
+                tradeOrderIdStr = rs3.getString(4);
+                updates.add(tradeOrderIdStr);
+                tradeStockId = rs3.getString(2);
+                String newTrade = "insert into Trade values (" + tradeAccountId + ", " + tradeEmployee + ", " +
+                        transId + ", " + tradeOrderId + ", '" + tradeStockId + "')";
+                trades.add(newTrade);
+                //Update Order Type to Sell
+//                System.out.println("5 " + rs3.getFetchSize());
+            }
+            System.out.println("4.8");
+            if(foundOrder) {
+                for(int i=0;i<transactions.size(); i++){
+                    stmt.executeUpdate(transactions.get(i));
+                    System.out.println("6");
+                }
+                for(int i=0;i<trades.size(); i++){
+                    stmt.executeUpdate(trades.get(i));
+                    System.out.println("7");
+                }
+                for(int i=0;i<updates.size(); i++){
+                    String updateOrderType = "UPDATE snisonoff.Order O SET O.OrderType = 'Sell' Where O.Id = " + updates.get(i) + "";
+                    stmt.executeUpdate(updateOrderType);
+                    System.out.println("8");
+                }
+            }
             con.close();
             return "success";
         }
@@ -215,7 +297,7 @@ public class StockDao {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  5
     //Working, but needs visual editing
-    public List<Stock> getOverallBestsellers() {
+    public List<Stock> getOverallBestsellers() {    // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -228,19 +310,20 @@ public class StockDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select Tr.StockId, COUNT(Tr.StockId) " +
-                    "From snisonoff.Order O, Trade Tr " +
-                    "Where O.Id = Tr.OrderId " +
+            ResultSet rs = stmt.executeQuery("Select Tr.StockId, S.CompanyName, S.Type, COUNT(Tr.StockId), S.PricePerShare " +
+                    "From snisonoff.Order O, Trade Tr, Stock S " +
+                    "Where O.Id = Tr.OrderId AND S.StockSymbol = O.StockName " +
                     "Group By Tr.StockId " +
-                    "Order By Count(Tr.StockId);");
+                    "Order By Count(Tr.StockId) DESC;");
 
             while(rs.next()){
                 Stock s = new Stock();
-                s.setSymbol(rs.getString(1)); //Idk if StockId is name or symbol
-//                s.setName(rs.getString(2));
-//                s.setType(rs.getString(3));
-//                s.setPrice(rs.getDouble(4));
-                s.setNumShares(rs.getInt(2));
+                String stockSymbol = rs.getString(1);
+                s.setSymbol(rs.getString(1));
+                s.setName(rs.getString(2));
+                s.setType(rs.getString(3));
+                s.setPrice(rs.getDouble(5));
+                s.setNumShares(rs.getInt(4));
                 stocks.add(s);
             }
             con.close();
@@ -253,8 +336,7 @@ public class StockDao {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   6
-    //Working; fix visualization + use customerID
-    public List<Stock> getCustomerBestsellers(String customerID) { //Needs completion
+    public List<Stock> getCustomerBestsellers(String customerID) {  // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here.
@@ -274,20 +356,19 @@ public class StockDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select O.StockName, COUNT(O. StockName) " +
-                    "From snisonoff.Order O, Trade Tr, Account A " +
-                    "Where A.Client = '222222222' AND A.Id = Tr.AccountId AND O.Id = Tr. OrderId " +
+            ResultSet rs = stmt.executeQuery("Select O.StockName, S.CompanyName, S.Type, S.PricePerShare, COUNT(O.StockName) " +
+                    "From snisonoff.Order O, Trade Tr, Account A, Stock S " +
+                    "Where A.Client = " + customerID+ " AND A.Id = Tr.AccountId AND O.Id = Tr. OrderId AND O.StockName = S.StockSymbol " +
                     "Group By O.StockName " +
                     "Order By COUNT(O.StockName);");
-
 
             while(rs.next()){
                 Stock s = new Stock();
                 s.setSymbol(rs.getString(1)); //Idk if StockId is name or symbol
-//                s.setName(rs.getString(2));
-//                s.setType(rs.getString(3));
-//                s.setPrice(rs.getDouble(4));
-                s.setNumShares(rs.getInt(2));
+                s.setName(rs.getString(2));
+                s.setType(rs.getString(3));
+                s.setPrice(rs.getDouble(4));
+                s.setNumShares(rs.getInt(5));
                 stocks.add(s);
             }
             con.close();
@@ -300,8 +381,7 @@ public class StockDao {
     }
 
     ///////// C U R R E N T   S T O C K   H O L D I N G S///------------------------------------------SearchStocks Type   7
-    //Working! test with actual string customerId (has dummy value for now)
-    public List getStocksByCustomer(String customerId) {
+    public List getStocksByCustomer(String customerId) {    // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -319,7 +399,7 @@ public class StockDao {
             Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff","snisonoff","111614611");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT S.* FROM Stock S, Account A, Client C WHERE A.Stock = S.StockSymbol AND A.Client = C.Id AND C.Id = '444444444' " ); //customerId
+            ResultSet rs = stmt.executeQuery("SELECT S.* FROM Stock S, Account A, Client C WHERE A.Stock = S.StockSymbol AND A.Client = C.Id AND C.Id = " + customerId + ""); //customerId
 
 
             while(rs.next()){
@@ -342,8 +422,7 @@ public class StockDao {
          return stocks;
     }
     ///////// S E A R CH  S T O C K S /// NAME --------------------------------------------------- SearchStocks Name       8
-    //Working!
-    public List<Stock> getStocksByName(String name) { //Search by Stock Name : Working!
+    public List<Stock> getStocksByName(String name) {   // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -379,8 +458,7 @@ public class StockDao {
 
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  9
-    // Working, but giving many many results (and the company symbols are inaccurate)
-    public List<Stock> getStockSuggestions(String customerID) {
+    public List<Stock> getStockSuggestions(String customerID) {     // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -405,13 +483,13 @@ public class StockDao {
                     "Select P. SSN, P. LastName, P.FirstName, C. Id, A.Id, O.StockName, " +
                     "T. DateTime, T. PricePerShare, T. Fee, O.OrderType, S.CompanyName, S.Type " +
                     "From Person P, Client C, Account A, snisonoff.Order O, Transaction T, Stock S, Trade Tr " +
-                    "Where A.Client = '"+ "222222222"+ "' and Tr. AccountId = A.Client and " +
-                    "T.Id = Tr. TransactionId and Tr. OrderId = O. Id; ";
-            String q2 = "Select * " +
-                    "From Stock S, SelectedOrders SO " +
-                    "Where Type In (Select StockType from SelectedOrders " +
-                    "Where SO.AccountId = '222222222') And S.StockSymbol Not In ( Select StockName from SelectedOrders " +
-                    "Where AccountId = '" + "222222222" + "')";
+                    "WHERE P.SSN = " + customerID +" AND P.SSN = C.Id and C.Id = A.Client and Tr. AccountId = A.Id and " +
+                    "Tr. TransactionId = T. Id and Tr. OrderId = O. Id and O. StockName = S. StockSymbol";
+            String q2 = "Select S.StockSymbol, S.CompanyName, S.Type, S.NumShares, S.PricePerShare " +
+                    "From Stock S " +
+                    "Where S.Type in (Select StockType from SelectedOrders " +
+                    "Where SSN = " + customerID + ") And StockSymbol Not In ( Select StockName from SelectedOrders " +
+                    "Where SSN = " + customerID + ")";
 //            String q3 = "Drop View SelectedOrders";
 
             stmt.executeUpdate(q1);
@@ -436,8 +514,7 @@ public class StockDao {
         return stocks;
     }
     ///////// S T O C K  P R I C E  H I S T O R Y  /// ---------------------------------------------Stock Price History   10
-    //Working! but needs some editing on visuals
-    public List<Stock> getStockPriceHistory(String stockSymbol) { // STOCK PRICE HISTORY -- working, but needs some editing
+    public List<Stock> getStockPriceHistory(String stockSymbol) { // STOCK PRICE HISTORY -- working, but needs some editing     // TESTING: DONE (I guess)
 
         /*
          * The students code to fetch data from the database
@@ -454,18 +531,17 @@ public class StockDao {
             Statement stmt = con.createStatement();
             String StockSymbol = "'" + stockSymbol + "'";
             System.out.println(StockSymbol);
-            ResultSet rs = stmt.executeQuery("SELECT * FROM snisonoff.StockPriceHistory WHERE StockSymbol1 = " + StockSymbol); //stockSymbol
+            ResultSet rs = stmt.executeQuery("SELECT SH.StockSymbol1, S.CompanyName, S.Type, SH.SharePrice,  S.NumShares FROM snisonoff.StockPriceHistory SH, Stock S WHERE StockSymbol1 = " + StockSymbol + " AND S.StockSymbol = " + StockSymbol); //stockSymbol
 
 
             //fix the output so it shows proper results plus timestamp. viewGetStockPriceHistory.jsp and showStock.jsp
             while(rs.next()){
-                System.out.println("3!!");
                 Stock s = new Stock();
                 s.setSymbol(rs.getString(1));
-                s.setName(null);
-                s.setType(null);
-                s.setPrice(rs.getDouble(2));
-                s.setNumShares(3);
+                s.setName(rs.getString(2));
+                s.setType(rs.getString(3));
+                s.setPrice(rs.getDouble(4));
+                s.setNumShares(rs.getInt(5));
                 stocks.add(s);
             }
             con.close();
@@ -479,8 +555,7 @@ public class StockDao {
     }
 
     ///////// S E A R CH  S T O C K S /// TYPE Options --------------------------------------------- SearchStocks Type     11
-    //Dealing with duplicates only half working
-    public List<String> getStockTypes() { //Search Options: Search by Type --> Remove dulpicate method half working
+    public List<String> getStockTypes() {   // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here.
@@ -530,14 +605,12 @@ public class StockDao {
             System.out.println(x);
             System.out.println("Error loading the customers");
         }
-//        types.add("technology");
-//        types.add("finance");
         return types;
     }
     ///////// S E A R CH  S T O C K S /// TYPE --------------------------------------------------- SearchStocks Type      12
     //Working!
 
-    public List<Stock> getStockByType(String stockType) {
+    public List<Stock> getStockByType(String stockType) {       // TESTING: DONE
 
         /*
          * The students code to fetch data from the database will be written here
@@ -568,8 +641,6 @@ public class StockDao {
             System.out.println(x);
             System.out.println("Error loading the customers");
         }
-
         return stocks;
-
     }
 }
