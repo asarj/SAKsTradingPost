@@ -1,10 +1,11 @@
 # SAKsTradingPost
 An e-commerce application created for a CSE 305 assignment
+Users Guide: https://docs.google.com/document/d/1C0Kgqku-Nok4t_wizbuuRInj5etPUXATZCBUUO0zmI8/edit
 
-Group Members Name, NetID:
-Kamile Demir, kdemir
-Ajay Sarjoo, asarjoo
-Spencer Nisonoff, 
+⋅⋅⋅Group Members:⋅⋅⋅
+⋅⋅⋅Kamile Demir - kdemir⋅⋅⋅
+⋅⋅⋅Ajay Sarjoo - asarjoo⋅⋅⋅
+⋅⋅⋅Spencer Nisonoff - snisonoff⋅⋅⋅ 
 
 --EXTRA ADDED FEATURES--
 1. For Customer’s Stock Search (StockDao getStockTypes()), code was added so that the Stock Type options would not have duplicates of the same stock type for the customer to choose from.
