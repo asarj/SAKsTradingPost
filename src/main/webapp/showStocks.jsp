@@ -14,6 +14,7 @@
                     <th>Symbol</th>
                     <th>Name</th>
                     <th>Type</th>
+                    <th>Price</th>
                     <th>Number of stocks</th>
                 </tr>
                 </thead>
@@ -23,6 +24,7 @@
                         <td>${cd.symbol}</td>
                         <td>${cd.name}</td>
                         <td>${cd.type}</td>
+                        <td>${cd.price}</td>
                         <td>${cd.numShares}</td>
                         <td></td>
                     </tr>

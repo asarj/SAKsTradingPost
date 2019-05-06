@@ -78,17 +78,17 @@ public class CustomerDao {
             con.setAutoCommit(false);
             Statement stmt = con.createStatement();
             try {
-                stmt.executeUpdate("DROP VIEW COrder");
-                stmt.executeUpdate("DROP VIEW CRevenue");
-                stmt.executeUpdate("DROP VIEW HighestRevenue");
+                stmt.executeUpdate("DROP VIEW snisonoff.COrder");
+                stmt.executeUpdate("DROP VIEW snisonoff.CRevenue");
+                stmt.executeUpdate("DROP VIEW snisonoff.HighestRevenue");
             } catch(SQLSyntaxErrorException s){
                 try{
-                    stmt.executeUpdate("DROP VIEW CRevenue");
-                    stmt.executeUpdate("DROP VIEW HighestRevenue");
+                    stmt.executeUpdate("DROP VIEW snisonoff.CRevenue");
+                    stmt.executeUpdate("DROP VIEW snisonoff.HighestRevenue");
                 }
                 catch(SQLSyntaxErrorException t){
                     try{
-                        stmt.executeUpdate("DROP VIEW HighestRevenue");
+                        stmt.executeUpdate("DROP VIEW snisonoff.HighestRevenue");
                     }
                     catch(SQLSyntaxErrorException u){
 
