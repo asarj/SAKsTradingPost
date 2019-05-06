@@ -458,7 +458,7 @@ public class OrderDao {
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql4.cs.stonybrook.edu:3306/snisonoff", "snisonoff", "111614611");
             //   Statement stmt = con.createStatement();
 
-            String sql = "SELECT DISTINCT P.SSN, P.LastName, P.FirstName, C.Id, A.Id, O.Id, O.StockName, O.DateTime, T.DateTime, O.PriceType, O.NumShares " +
+            String sql = "SELECT DISTINCT P.SSN, P.LastName, P.FirstName, C.Id, A.Id, O.Id, O.StockName, O.DateTime, T.DateTime, O.PriceType, O.NumShares, O.OrderType " +
                     "FROM snisonoff.Person P, snisonoff.Client C, snisonoff.Account A, snisonoff.Order O, snisonoff.Trade Tr, snisonoff.Transaction T " +
                     "WHERE P.SSN = C.Id and C.Id = A.Id and A.Id = Tr.AccountId and Tr.OrderId = O.Id and Tr.TransactionId = T.Id and C.Id = ? " +
                     "ORDER BY O.Id ASC";
@@ -485,6 +485,7 @@ public class OrderDao {
                     o.setDatetime(rs.getDate(8));
                     o.setPriceType(rs.getString(10));
                     o.setNumShares(rs.getInt(11));
+                    o.setOrderType(rs.getString(12));
                     orders.add(o);
                 }
                 else if(type.equals("MarketOnClose")){
@@ -495,6 +496,7 @@ public class OrderDao {
                     o.setDatetime(rs.getDate(8));
                     o.setPriceType(rs.getString(10));
                     o.setNumShares(rs.getInt(11));
+                    o.setOrderType(rs.getString(12));
                     orders.add(o);
                 }
                 else if(type.equals("TrailingStop")){
@@ -505,6 +507,7 @@ public class OrderDao {
                     o.setDatetime(rs.getDate(8));
                     o.setPriceType(rs.getString(10));
                     o.setNumShares(rs.getInt(11));
+                    o.setOrderType(rs.getString(12));
                     orders.add(o);
                 }
                 else if (type.equals("HiddenStop")){
@@ -515,6 +518,7 @@ public class OrderDao {
                     o.setDatetime(rs.getDate(8));
                     o.setPriceType(rs.getString(10));
                     o.setNumShares(rs.getInt(11));
+                    o.setOrderType(rs.getString(12));
                     orders.add(o);
                 }
                 else{
