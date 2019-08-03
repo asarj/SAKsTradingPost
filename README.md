@@ -4,9 +4,9 @@ Users Guide: https://docs.google.com/document/d/1C0Kgqku-Nok4t_wizbuuRInj5etPUXA
 
 Group Members:
 --------------
-Kamile Demir - kdemir  
-Ajay Sarjoo - asarjoo  
-Spencer Nisonoff - snisonoff  
+Kamile Demir  
+Ajay Sarjoo  
+Spencer Nisonoff 
 
 EXTRA ADDED FEATURES:
 ---------------------
